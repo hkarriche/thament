@@ -164,7 +164,8 @@ class Categorie(models.Model):
 class Produit (models.Model):
     ref_prod = models.CharField(max_length=200)
     cat_prod = models.ForeignKey(Categorie, on_delete=models.CASCADE) 
-    des_prod = models.CharField(max_length=200)
+    des_prod = models.CharField(max_length=200) 
+    prix_prod = models.FloatField()
     image_prod = models.ImageField()
 
 class Panier(models.Model):
