@@ -74,14 +74,27 @@ WSGI_APPLICATION = 'thamente.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+# HKA 18.08.2016 Local Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'django',
+#         'USER': 'root',
+#         'PASSWORD': 'Iogrow2016',
+#         'HOST': '127.0.0.1',
+#         #'PORT': '5432',
+#     }
+# }
+
+# HKA 18.08.2016 Server database
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
-        'USER': 'root',
-        'PASSWORD': 'Iogrow2016',
-        'HOST': '127.0.0.1',
+        'NAME': 'azemmour',
+        'USER': 'adminasHjpSF',
+        'PASSWORD': 'xRIf5tX5XrrD',
+        'HOST': 'mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/',
         #'PORT': '5432',
     }
 }
