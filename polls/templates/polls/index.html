@@ -141,7 +141,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 {% if categories %}
    					<ul class="nav navbar-nav nav_1">
 					{% for categ in categories %}
-						<li><a href="{% url 'polls:olives' %}">{{categ.nom_categorie}}</a></li>
+						<li><a href="/polls/{{categ.url_categorie}}">{{categ.nom_categorie}}</a></li>
 						{% endfor %}
 						<!-- <li><a href="bread.html">Huile d'oléastre</a></li>
 						<li><a href="pet.html">Huile de lentisque</a></li>

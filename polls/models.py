@@ -121,6 +121,7 @@ AbstractBaseUser._meta.get_field('password').verbose_name = _('password_vendeur'
 
 class Categorie(models.Model):
     nom_categorie = models.CharField(max_length=200)
+    url_categorie = models.CharField(max_length=200)
 
 class Produit (models.Model):
     ref_prod = models.CharField(max_length=200)
