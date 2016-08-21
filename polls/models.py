@@ -128,7 +128,7 @@ class Produit (models.Model):
     des_prod = models.CharField(max_length=200) 
     prix_prod = models.FloatField(null=True)
     remise_prod = models.FloatField(null=True)
-    image_prod = models.ImageField(upload_to='polls/images')
+    image_prod = models.ImageField(upload_to='polls/static/polls/images')
 
 class Panier(models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)

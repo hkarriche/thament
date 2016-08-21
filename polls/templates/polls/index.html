@@ -138,53 +138,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			   </div> 
 			   <!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-					<ul class="nav navbar-nav nav_1">
-						<li><a href="{% url 'polls:olives' %}">Huile d'olives</a></li>
-						<li><a href="bread.html">Huile d'oléastre</a></li>
+				 {% if categories %}
+   					<ul class="nav navbar-nav nav_1">
+					{% for categ in categories %}
+						<li><a href="{% url 'polls:olives' %}">{{categ.nom_categorie}}</a></li>
+						{% endfor %}
+						<!-- <li><a href="bread.html">Huile d'oléastre</a></li>
 						<li><a href="pet.html">Huile de lentisque</a></li>
 						<li><a href="household.html">Miel</a></li>
-						<li><a href="household.html">Dattes</a></li>
-						<!-- <li class="dropdown mega-dropdown active">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Veggies & Fruits<span class="caret"></span></a>				
-							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-								<div class="w3ls_vegetables">
-									<ul>	
-										<li><a href="vegetables.html">Dattes</a></li>
-										<li><a href="vegetables.html">Fruits</a></li>
-									</ul>
-								</div>                  
-							</div>				
-						</li> -->
+						<li><a href="household.html">Dattes</a></li>					
 						<li><a href="kitchen.html">Figues seches</a></li>
 						<li><a href="short-codes.html">Raisins sec</a></li>
-						
 						<li><a href="pet.html">Epices</a></li>
-						<li><a href="pet.html">Pistache</a></li>
-						<!-- <li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Beverages<span class="caret"></span></a>
-							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-								<div class="w3ls_vegetables">
-									<ul>
-										<li><a href="drinks.html">Soft Drinks</a></li>
-										<li><a href="drinks.html">Juices</a></li>
-									</ul>
-								</div>                  
-							</div>	
-						</li> -->
-						
-						<!-- <li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Frozen Foods<span class="caret"></span></a>
-							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-								<div class="w3ls_vegetables">
-									<ul>
-										<li><a href="frozen.html"></a></li>
-										<li><a href="frozen.html"></a></li>
-									</ul>
-								</div>                  
-							</div>	
-						</li> -->
+						<li><a href="pet.html">Pistache</a></li> -->
 						
 					</ul>
+				{% else %}
+                <p>No polls are available.</p>
+                {% endif %}
 				 </div><!-- /.navbar-collapse -->
 			</nav>
 		</div>
