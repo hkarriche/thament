@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404,render
 from django.http import HttpResponseRedirect,HttpResponse
 from django.http import Http404
 from django.template import loader
-from .models import Question,Choice
+from .models import Question,Choice, Produit
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.utils import timezone
@@ -45,3 +45,12 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+class OliveView(generic.ListView):
+    template_name = 'polls/olives.html'
+    context_object_name = 'olives_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        #return Question.objects.order_by('-pub_date')[:5]
+        return Produit.objects.filter( ref_prod='huileolives')
