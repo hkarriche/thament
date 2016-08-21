@@ -13,45 +13,6 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 
 
-
-# class User(AbstractBaseUser, PermissionsMixin):
-#     email = models.EmailField(_('email address'), unique=True)
-#     first_name = models.CharField(_('first name'), max_length=30, blank=True)
-#     last_name = models.CharField(_('last name'), max_length=30, blank=True)
-#     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-#     is_active = models.BooleanField(_('active'), default=True)
-#     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
-
-
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-    probability = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.question_text
-    def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.pub_date <= now
-    was_published_recently.admin_order_field = 'pub_date'
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Published recently?'
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-
-
-    def __str__(self):
-        return self.choice_text
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
-
-
-
 class AccountManager(BaseUserManager):
 
     def create_user(self, email, password=None):
@@ -165,7 +126,7 @@ class Produit (models.Model):
     ref_prod = models.CharField(max_length=200)
     cat_prod = models.ForeignKey(Categorie, on_delete=models.CASCADE) 
     des_prod = models.CharField(max_length=200) 
-    prix_prod = models.FloatField()
+    prix_prod = models.FloatField(null=True)
     image_prod = models.ImageField()
 
 class Panier(models.Model):
@@ -191,3 +152,45 @@ class MessageContact(models.Model):
     objet_msg = models.CharField(max_length=200)
     contenu_msg = models.CharField(max_length=200)
     date_msg = models.DateTimeField()
+
+
+
+
+
+
+
+# class User(AbstractBaseUser, PermissionsMixin):
+#     email = models.EmailField(_('email address'), unique=True)
+#     first_name = models.CharField(_('first name'), max_length=30, blank=True)
+#     last_name = models.CharField(_('last name'), max_length=30, blank=True)
+#     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
+#     is_active = models.BooleanField(_('active'), default=True)
+#     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+
+
+@python_2_unicode_compatible  # only if you need to support Python 2
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    probability = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.question_text
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+    was_published_recently.admin_order_field = 'pub_date'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Published recently?'
+@python_2_unicode_compatible  # only if you need to support Python 2
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+
+    def __str__(self):
+        return self.choice_text
+
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
