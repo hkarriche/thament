@@ -121,7 +121,7 @@ AbstractBaseUser._meta.get_field('password').verbose_name = _('password_vendeur'
 
 class Categorie(models.Model):
     nom_categorie = models.CharField(max_length=200)
-    url_categorie = models.CharField(max_length=200)
+    url_categorie = models.CharField(max_length=200) #HKA 21.08.2016 this field is added for the url in welcome page
 
 class Produit (models.Model):
     ref_prod = models.CharField(max_length=200)

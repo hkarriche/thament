@@ -45,11 +45,102 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-class OliveView(generic.ListView):
-    template_name = 'polls/olives.html'
-    context_object_name = 'olives_list'
 
-    def get_queryset(self):
-        """Return the last five published questions."""
-        #return Question.objects.order_by('-pub_date')[:5]
-        return Produit.objects.all()
+class OliveView(generic.ListView):
+    context_object_name = 'olives_list'
+    template_name = 'polls/olives.html'
+    queryset = Produit.objects.all()
+
+
+    def get_context_data(self, **kwargs):
+        context = super(OliveView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class OleastreView(generic.ListView):
+    context_object_name = 'oleastres_list'
+    template_name = 'polls/oleastres.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(OleastreView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class LentisqueView(generic.ListView):
+    context_object_name = 'lentisques_list'
+    template_name = 'polls/lentisques.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(LentisqueView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class MielView(generic.ListView):
+    context_object_name = 'miel_list'
+    template_name = 'polls/miel.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(MielView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class LentisqueView(generic.ListView):
+    context_object_name = 'dattes_list'
+    template_name = 'polls/dattes.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(LentisqueView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class FiguesView(generic.ListView):
+    context_object_name = 'figues_list'
+    template_name = 'polls/figues.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(FiguesView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class DattesView(generic.ListView):
+    context_object_name = 'dattes_list'
+    template_name = 'polls/dattes.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(DattesView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class RaisinsView(generic.ListView):
+    context_object_name = 'raisins_list'
+    template_name = 'polls/raisins.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(RaisinsView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+
+class PistachesView(generic.ListView):
+    context_object_name = 'pistaches_list'
+    template_name = 'polls/pistaches.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(PistachesView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
