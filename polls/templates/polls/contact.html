@@ -160,53 +160,48 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</nav>
 		</div>
 		<div class="w3l_banner_nav_right">
-			<section class="slider">
-				<div class="flexslider">
-					<ul class="slides">
-						<li>
-							<div class="w3l_banner_nav_right_banner">
-								<h3>Déguster <span>Nos</span> produits.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="w3l_banner_nav_right_banner1">
-								<h3>Faites <span>Vos</span> Achat.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="w3l_banner_nav_right_banner2">
-								<h3>Arrive à <i>50%</i> de remise.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
-							</div>
-						</li>
+		<!-- mail -->
+		<div class="mail">
+			<h3>Contacts</h3>
+			<div class="agileinfo_mail_grids">
+				<div class="col-md-4 agileinfo_mail_grid_left">
+					<ul>
+						<li><i class="fa fa-home" aria-hidden="true"></i></li>
+						<li>address<span>13 Rue Ali khodja, Ben Aknoun Alger</span></li>
+					</ul>
+					<ul>
+						<li><i class="fa fa-envelope" aria-hidden="true"></i></li>
+						<li>email<span><a href="mailto:contact@thament.com">contact@thament.com</a></span></li>
+					</ul>
+					<ul>
+						<li><i class="fa fa-phone" aria-hidden="true"></i></li>
+						<li>Tel<span>(+213) 5 555 000</span></li>
 					</ul>
 				</div>
-			</section>
-			<!-- flexSlider -->
-				<link rel="stylesheet" href="{% static 'polls/css/flexslider.css' %}" type="text/css" media="screen" property="" />
-				<script defer src="{% static 'polls/js/jquery.flexslider.js' %}"></script> 
-				<script type="text/javascript">
-				$(window).load(function(){
-				  $('.flexslider').flexslider({
-					animation: "slide",
-					start: function(slider){
-					  $('body').removeClass('loading');
-					}
-				  });
-				});
-			  </script>
-			<!-- //flexSlider -->
+				<div class="col-md-8 agileinfo_mail_grid_right">
+					<form action="#" method="post">
+						<div class="col-md-6 wthree_contact_left_grid">
+							<input type="text" name="Name" value="Name*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name*';}" required="">
+							<input type="email" name="Email" value="Email*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email*';}" required="">
+						</div>
+						<div class="col-md-6 wthree_contact_left_grid">
+							<input type="text" name="Telephone" value="Telephone*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone*';}" required="">
+							<input type="text" name="Subject" value="Subject*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Subject*';}" required="">
+						</div>
+						<div class="clearfix"> </div>
+						<textarea  name="Message" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
+						<input type="submit" value="Submit">
+						<input type="reset" value="Clear">
+					</form>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+<!-- //mail -->
+			
 		</div>
 		<div class="clearfix"></div>
-	</div>
+	</div> -->
 <!-- banner -->
 	<!-- <div class="banner_bottom">
 			<div class="wthree_banner_bottom_left_grid_sub">
@@ -241,62 +236,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"> </div>
 	</div> -->
 <!-- top-brands -->
-	<div class="top-brands">
-		<div class="container">
-			<h3>Huile d'olives</h3>
-			<div class="agile_top_brands_grids">
-				
-   
-   {% if olives_list %}
-
-    {% for olive in olives_list %}
-        
-    
-				<div class="col-md-3 top_brand_left">
-					<div class="hover14 column">
-						<div class="agile_top_brand_left_grid">
-							<div class="tag"><img src="{% static 'polls/images/tag.png' %}" alt=" " class="img-responsive" /></div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block" >
-										<div class="snipcart-thumb">
-											<a href=""><img title="{{ olive.ref_prod }} " alt=" " src="{% static 'polls/images/1.png' %}" /></a>		
-											<p>{{ olive.ref_prod }}</p>
-											<h4>DA {{ olive.prix_prod }}<span></span></h4>
-										</div>
-										<div class="snipcart-details top_brand_home_details">
-											<form action="#" method="post">
-												<fieldset>
-													<input type="hidden" name="cmd" value="_cart" />
-													<input type="hidden" name="add" value="1" />
-													<input type="hidden" name="business" value=" " />
-													<input type="hidden" name="item_name" value="{{ olive.ref_prod }}" />
-													<input type="hidden" name="amount" value="{{ olive.prix_prod }}" />
-													<input type="hidden" name="discount_amount" value="{{ olive.remise_prod }}" />
-													<input type="hidden" name="currency_code" value="USD" />
-													<input type="hidden" name="return" value=" " />
-													<input type="hidden" name="cancel_return" value=" " />
-													<input type="submit" name="submit" value="Ajouter au panier" class="button" />
-												</fieldset>
-											</form>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-			{% endfor %}	
-				
-          {% else %}
-                 <p>Aucun Produit n'est disponible.</p>
-          {% endif %}
-
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div>
+	<!--  -->
 <!-- //top-brands -->
 <!-- fresh-vegetables -->
 <!-- 	<div class="fresh-vegetables">

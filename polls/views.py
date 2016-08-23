@@ -144,3 +144,8 @@ class PistachesView(generic.ListView):
         context = super(PistachesView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
         return context
+
+class ContactView(generic.ListView):
+    context_object_name = 'categories'
+    template_name = 'polls/contact.html'
+    queryset = Categorie.objects.all()
