@@ -149,11 +149,13 @@ class Facture (models.Model):
 
 
 class MessageContact(models.Model):
-    num_msg = models.CharField(max_length=200)
+    num_msg = models.CharField(max_length=200,null=True)
     #login_clt = 
-    objet_msg = models.CharField(max_length=200)
-    contenu_msg = models.CharField(max_length=200)
-    date_msg = models.DateTimeField()
+    objet = models.CharField(max_length=200,null=True)
+    contenu = models.TextField(max_length=200,null=True)
+    tel = models.CharField(max_length=200,null=True)
+    email = models.CharField(max_length=200,null=True)
+    date_msg = models.DateTimeField(null=True)
 
 
 

@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^raisins/$', views.RaisinsView.as_view(), name='raisins_list'),
     url(r'^pistaches/$', views.PistachesView.as_view(), name='pistaches_list'),
     url(r'^contact/$', views.ContactView.as_view(), name='contact_list'),
+    url(r'^contact/create$', views.sendMessageContact, name='sendcontact'),
 ]

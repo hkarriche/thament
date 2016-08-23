@@ -20,6 +20,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <link href="{% static 'polls/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
 <link href="{% static 'polls/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+
 <!-- font-awesome icons -->
 <link href="{% static 'polls/css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" /> 
 <!-- //font-awesome icons -->
@@ -46,6 +47,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <!-- header -->
 	<div class="agileits_header">
+
 		<div class="w3l_offers">
 			<a href="products.html">Offre spécial du jour !</a>
 		</div>
@@ -162,7 +164,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="w3l_banner_nav_right">
 		<!-- mail -->
 		<div class="mail">
-			<h3>Contacts</h3>
+			<h2>Contacts</h2>
 			<div class="agileinfo_mail_grids">
 				<div class="col-md-4 agileinfo_mail_grid_left">
 					<ul>
@@ -179,20 +181,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</ul>
 				</div>
 				<div class="col-md-8 agileinfo_mail_grid_right">
-					<form action="#" method="post">
+				{% block content %}
+                <form method="Post" action="/polls/contact/create" class="post-form">{% csrf_token %}
+                  {{ form.as_ul }}
+
+                 <li><span></span></li>
+                 <button type="submit">Envoyer</button>
+                 </form>
+                {% endblock %}
+					<!-- <form action="#" method="post">
 						<div class="col-md-6 wthree_contact_left_grid">
-							<input type="text" name="Name" value="Name*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name*';}" required="">
+							<input type="text" name="Name" value="Nom*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name*';}" required="">
 							<input type="email" name="Email" value="Email*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email*';}" required="">
 						</div>
 						<div class="col-md-6 wthree_contact_left_grid">
-							<input type="text" name="Telephone" value="Telephone*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone*';}" required="">
-							<input type="text" name="Subject" value="Subject*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Subject*';}" required="">
+							<input type="text" name="Telephone" value="Téléphone*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone*';}" required="">
+							<input type="text" name="Subject" value="Sujet*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Subject*';}" required="">
 						</div>
 						<div class="clearfix"> </div>
 						<textarea  name="Message" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
-						<input type="submit" value="Submit">
-						<input type="reset" value="Clear">
-					</form>
+						<input type="submit" value="Envoyer">
+						<input type="reset" value="Effacer">
+					</form> -->
 				</div>
 				<div class="clearfix"> </div>
 			</div>
@@ -448,6 +458,9 @@ $(document).ready(function(){
 								
 			});
 	</script>
+	<script>
+    alert('{{ message }}');
+</script>
 <!-- //here ends scrolling icon -->
 <script src="{% static 'polls/js/minicart.min.js' %}"></script>
 <script>

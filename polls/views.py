@@ -8,7 +8,8 @@ from .models import Question,Choice, Produit, Categorie
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.utils import timezone
-
+from forms import MessageContactForm
+from django.template.context_processors import csrf
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -146,6 +147,31 @@ class PistachesView(generic.ListView):
         return context
 
 class ContactView(generic.ListView):
-    context_object_name = 'categories'
+    context_object_name = 'categories' 
+    #form = MessageContactForm()
     template_name = 'polls/contact.html'
     queryset = Categorie.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        form = MessageContactForm()
+        context['form'] = form
+        return context
+# HKA 23.08.2016 define the send message function
+def sendMessageContact(request):
+    if request.POST:
+        form = MessageContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #return HttpResponseRedirect(reverse('polls:contact'))
+            return HttpResponseRedirect('/polls/contact')
+    else :
+        form = MessageContactForm()
+        args={}
+        args.update(csrf(request))
+        args['form']=form
+
+        return render_to_response('/polls/contact')
+    
+
+
+
