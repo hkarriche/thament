@@ -20,7 +20,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <link href="{% static 'polls/css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
 <link href="{% static 'polls/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
-
 <!-- font-awesome icons -->
 <link href="{% static 'polls/css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" /> 
 <!-- //font-awesome icons -->
@@ -47,9 +46,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <!-- header -->
 	<div class="agileits_header">
-
 		<div class="w3l_offers">
-			<a href="products.html">Offre spécial du jour !</a>
+			<a href="">Votre santé avant tout  !</a>
 		</div>
 		<div class="w3l_search">
 			<form action="#" method="post">
@@ -82,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</ul>
 		</div>
 		<div class="w3l_header_right1">
-			<h2><a href="mail.html">Contactez nous</a></h2>
+			<h2><a href="/polls/contact">Contactez nous</a></h2>
 		</div>
 		<div class="clearfix"> </div>
 	</div>
@@ -110,7 +108,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="w3ls_logo_products_left1">
 				<ul class="special_items">
 					<!-- <li><a href="events.html">Events</a><i>/</i></li> -->
-					<li><a href="about.html">A propos de nous</a><i>/</i></li>
+					<li><a href="about.html">A propos de nous </a><i>/</i></li>
 					<li><a href="products.html">Vendre</a><i>/</i></li>
 					<!-- <li><a href="services.html">Services</a></li> -->
 				</ul>
@@ -162,27 +160,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</nav>
 		</div>
 		<div class="w3l_banner_nav_right">
-		<!-- mail -->
-		<div class="mail">
-			<h2>Contacts</h2>
-			<div class="agileinfo_mail_grids">
-				<div class="col-md-4 agileinfo_mail_grid_left">
-					<ul>
-						<li><i class="fa fa-home" aria-hidden="true"></i></li>
-						<li>address<span>13 Rue Ali khodja, Ben Aknoun Alger</span></li>
-					</ul>
-					<ul>
-						<li><i class="fa fa-envelope" aria-hidden="true"></i></li>
-						<li>email<span><a href="mailto:contact@thament.com">contact@thament.com</a></span></li>
-					</ul>
-					<ul>
-						<li><i class="fa fa-phone" aria-hidden="true"></i></li>
-						<li>Tel<span>(+213) 5 555 000</span></li>
-					</ul>
-				</div>
-				<div class="col-md-8 agileinfo_mail_grid_right">
-				{% block content %}
-                <form method="Post" action="/polls/contact/create" class="post-form">{% csrf_token %}
+
+		<!-- login -->
+		<div class="w3_login">
+			<h3>Creation Compte Vendeur</h3>
+			<div class="w3_login_module">
+				<div class="module form-module">
+				  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+					<!-- <div class="tooltip">Click Me</div> -->
+				  </div>
+				  <!-- <div class="form">
+					<h2>Login to your account</h2>
+					<form action="#" method="post">
+					  <input type="text" name="Username" placeholder="Username" required=" ">
+					  <input type="password" name="Password" placeholder="Password" required=" ">
+					  <input type="submit" value="Login">
+					</form>
+				  </div> -->
+				  <div class="form">
+					<h2>Create an account</h2>
+					{% block content %}
+                <form method="Post" action="/polls/vendeur/create" class="post-form">{% csrf_token %}
                   {{ form.as_ul }}
 
                  <li><span></span></li>
@@ -190,28 +188,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                  </form>
                 {% endblock %}
 					<!-- <form action="#" method="post">
-						<div class="col-md-6 wthree_contact_left_grid">
-							<input type="text" name="Name" value="Nom*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name*';}" required="">
-							<input type="email" name="Email" value="Email*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email*';}" required="">
-						</div>
-						<div class="col-md-6 wthree_contact_left_grid">
-							<input type="text" name="Telephone" value="Téléphone*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Telephone*';}" required="">
-							<input type="text" name="Subject" value="Sujet*" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Subject*';}" required="">
-						</div>
-						<div class="clearfix"> </div>
-						<textarea  name="Message" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
-						<input type="submit" value="Envoyer">
-						<input type="reset" value="Effacer">
+					  <input type="text" name="Username" placeholder="Username" required=" ">
+					  <input type="password" name="Password" placeholder="Password" required=" ">
+					  <input type="email" name="Email" placeholder="Email Address" required=" ">
+					  <input type="text" name="Phone" placeholder="Phone Number" required=" ">
+					  <input type="submit" value="Register">
 					</form> -->
+				  </div>
+				  <!-- <div class="cta"><a href="#">Forgot your password?</a></div> -->
 				</div>
-				<div class="clearfix"> </div>
 			</div>
+			<script>
+				$('.toggle').click(function(){
+				  // Switches the Icon
+				  $(this).children('i').toggleClass('fa-pencil');
+				  // Switches the forms  
+				  $('.form').animate({
+					height: "toggle",
+					'padding-top': 'toggle',
+					'padding-bottom': 'toggle',
+					opacity: "toggle"
+				  }, "slow");
+				});
+			</script>
 		</div>
-<!-- //mail -->
-			
-		</div>
-		<div class="clearfix"></div>
-	</div> -->
+<!-- //login -->
+	
+	</div>
 <!-- banner -->
 	<!-- <div class="banner_bottom">
 			<div class="wthree_banner_bottom_left_grid_sub">
@@ -246,7 +249,62 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="clearfix"> </div>
 	</div> -->
 <!-- top-brands -->
-	<!--  -->
+	<div class="top-brands">
+		<div class="container">
+			<h3>Offres fraiches</h3>
+		<div class="agile_top_brands_grids">
+				
+   
+   {% if produit_list %}
+
+    {% for olive in produit_list %}
+        
+    
+				<div class="col-md-3 top_brand_left">
+					<div class="hover14 column">
+						<div class="agile_top_brand_left_grid">
+							<div class="tag"><img src="{% static 'polls/images/tag.png' %}" alt=" " class="img-responsive" /></div>
+							<div class="agile_top_brand_left_grid1">
+								<figure>
+									<div class="snipcart-item block" >
+										<div class="snipcart-thumb">
+											<a href=""><img title="{{ olive.ref_prod }} " alt=" " src="{% static 'polls/images/1.png' %}" /></a>		
+											<p>{{ olive.ref_prod }}</p>
+											<h4>DA {{ olive.prix_prod }}<span></span></h4>
+										</div>
+										<div class="snipcart-details top_brand_home_details">
+											<form action="#" method="post">
+												<fieldset>
+													<input type="hidden" name="cmd" value="_cart" />
+													<input type="hidden" name="add" value="1" />
+													<input type="hidden" name="business" value=" " />
+													<input type="hidden" name="item_name" value="{{ olive.ref_prod }}" />
+													<input type="hidden" name="amount" value="{{ olive.prix_prod }}" />
+													<input type="hidden" name="discount_amount" value="{{ olive.remise_prod }}" />
+													<input type="hidden" name="currency_code" value="USD" />
+													<input type="hidden" name="return" value=" " />
+													<input type="hidden" name="cancel_return" value=" " />
+													<input type="submit" name="submit" value="Ajouter au panier" class="button" />
+												</fieldset>
+											</form>
+										</div>
+									</div>
+								</figure>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			{% endfor %}	
+				
+          {% else %}
+                 <p>Aucun Produit n'est disponible.</p>
+          {% endif %}
+
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
 <!-- //top-brands -->
 <!-- fresh-vegetables -->
 <!-- 	<div class="fresh-vegetables">
@@ -458,7 +516,6 @@ $(document).ready(function(){
 								
 			});
 	</script>
-	
 <!-- //here ends scrolling icon -->
 <script src="{% static 'polls/js/minicart.min.js' %}"></script>
 <script>

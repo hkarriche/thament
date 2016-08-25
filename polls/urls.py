@@ -1,7 +1,9 @@
 from django.conf.urls import url
 
 from . import views
-
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 app_name = 'polls'
 
@@ -20,4 +22,14 @@ urlpatterns = [
     url(r'^pistaches/$', views.PistachesView.as_view(), name='pistaches_list'),
     url(r'^contact/$', views.ContactView.as_view(), name='contact_list'),
     url(r'^contact/create$', views.sendMessageContact, name='sendcontact'),
+    #HKA 25.08.2016 Vendor views for sign-in & sign up
+    url('^register/vendeur', CreateView.as_view(template_name='polls/register_vendeur.html',form_class=UserCreationForm,success_url='/polls')),
+    url(r'^vendeur/create$', views.registerVendeur, name='createVendeur'),
+    url(r'^vendeur/login$',views.LoginVendeurView.as_view(), name='login_vendeur'),
+    url(r'^vendeur/authenticate$', views.AuthenticateVendeur, name='createVendeur'),
+    #HKA 25.08.2016 Customer views for sign-in & sign up
+    url('^register/client', CreateView.as_view(template_name='polls/register_vendeur.html',form_class=UserCreationForm,success_url='/polls')),
+    url(r'^client/create$', views.registerVendeur, name='createVendeur'),
+    url(r'^client/login$',views.LoginVendeurView.as_view(), name='login_vendeur'),
+    url(r'^client/authenticate$', views.AuthenticateVendeur, name='createVendeur'),
 ]

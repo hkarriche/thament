@@ -10,14 +10,20 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from forms import MessageContactForm
 from django.template.context_processors import csrf
+from django.contrib.auth.forms import UserCreationForm
+from django. contrib.auth import authenticate, login, logout
+from django.contrib import auth
 
 class IndexView(generic.ListView):
+    context_object_name = 'produit_list'
     template_name = 'polls/index.html'
-    context_object_name = 'categories'
+    queryset = Produit.objects.all()
 
-    def get_queryset(self):
-              
-        return Categorie.objects.all( )
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
 
 class DetailView(generic.DetailView):
     model = Question
@@ -172,6 +178,48 @@ def sendMessageContact(request):
 
         return render_to_response('/polls/contact')
     
+def registerVendeur(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect("/polls")
+    else:
+        form = UserCreationForm()
+    return render(request, "polls/register.html", {
+        'form': form,
+    })
 
+class LoginVendeurView(generic.ListView):
+    context_object_name = 'produits_list'
+    template_name = 'polls/login_vendeur.html'
+    queryset = Produit.objects.all()
+    
 
+    def get_context_data(self, **kwargs):
+        context = super(LoginVendeurView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        return context
+# HKA 25.08.2016 Function for vendor authentication 
+def AuthenticateVendeur(request):
+    username = request.POST.get('Username','')
+    password = request.POST.get('Password','')
+    user = authenticate(username=username,password=password)
+    if user is not None :
+        auth.login(request,user)
+        return HttpResponseRedirect('/admin')
+    else :
+        return HttpResponseRedirect('/polls/olives')    
+# def loginVendeur(request):
+#     username = request.POST['username']
+#     password = request.POST['password']
+#     user = authenticate(username=username, password=password)
+#     if user is not None:
+#         if user.is_active:
+#             login(request, user)
+#             # Redirect to a success page.
+#         else:
+#             # Return a 'disabled account' error message
+#     else:
+#         # Return an 'invalid login' error message.
 
