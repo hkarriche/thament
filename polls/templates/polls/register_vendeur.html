@@ -178,9 +178,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</form>
 				  </div> -->
 				  <div class="form">
-					<h2>Create an account</h2>
+					<h2>Créer un compte vendeur</h2>
 					{% block content %}
                 <form method="Post" action="/polls/vendeur/create" class="post-form">{% csrf_token %}
+               <!--  <input type="text" name="first_name" placeholder="Prénom" required=" ">
+                <input type="text" name="last_name" placeholder="Nom" required=" ">
+                <input type="email" name="Email" placeholder="Email" required=" "> -->
+				
+					 
                   {{ form.as_ul }}
 
                  <li><span></span></li>

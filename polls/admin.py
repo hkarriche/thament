@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 
 # Register your models here.
-from .models import Question, Client, Vendeur, Produit
+from .models import  Client, Vendeur, Produit
 # from .models import Choice,Client
 from .models import Panier, Commande, Facture, Categorie, MessageContact
 from .forms import CustomUserChangeForm, CustomUserCreationForm

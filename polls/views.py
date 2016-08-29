@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404,render
 from django.http import HttpResponseRedirect,HttpResponse
 from django.http import Http404
 from django.template import loader
-from .models import Question,Choice, Produit, Categorie
+from .models import  Produit, Categorie
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.utils import timezone
@@ -13,6 +13,9 @@ from django.template.context_processors import csrf
 from django.contrib.auth.forms import UserCreationForm
 from django. contrib.auth import authenticate, login, logout
 from django.contrib import auth
+from forms import MyCustomUserForm,ClientUserForm
+from django.contrib.auth.models import Permission, Group
+from django.contrib.contenttypes.models import ContentType
 
 class IndexView(generic.ListView):
     context_object_name = 'produit_list'
@@ -25,32 +28,7 @@ class IndexView(generic.ListView):
         context['categories'] = Categorie.objects.all()
         return context
 
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
-    
 
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-    
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
 class OliveView(generic.ListView):
@@ -177,16 +155,27 @@ def sendMessageContact(request):
         args['form']=form
 
         return render_to_response('/polls/contact')
+        #*********************#
+# HKA 25.08.2016 Function for vendor authentication  and registration
     
 def registerVendeur(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = MyCustomUserForm(request.POST)
         if form.is_valid():
             new_user = form.save()
+            # new_user.first_name = username = request.POST.get('first_name','')
+            # new_user.last_name = username = request.POST.get('last_name','')
+            # new_user.email = username = request.POST.get('Email','')
+            new_user.is_staff = True
+            group = Group.objects.get(name='vendeur')
+            print ("############################")
+            #print group
+            new_user.groups = group 
+            new_user.save()
             return HttpResponseRedirect("/polls")
     else:
-        form = UserCreationForm()
-    return render(request, "polls/register.html", {
+        form = MyCustomUserForm()
+    return render(request, "polls/register_vendeur.html", {
         'form': form,
     })
 
@@ -200,16 +189,40 @@ class LoginVendeurView(generic.ListView):
         context = super(LoginVendeurView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
         return context
-# HKA 25.08.2016 Function for vendor authentication 
+
+
 def AuthenticateVendeur(request):
     username = request.POST.get('Username','')
     password = request.POST.get('Password','')
     user = authenticate(username=username,password=password)
     if user is not None :
-        auth.login(request,user)
-        return HttpResponseRedirect('/admin')
+        if user.is_active:
+            auth.login(request,user)
+            return HttpResponseRedirect('/admin')
     else :
-        return HttpResponseRedirect('/polls/olives')    
+        return HttpResponseRedirect('/polls/olives')   
+
+ 
+      #*********************#
+# HKA 25.08.2016 Function for customer authentication 
+def registerClient(request):
+    if request.method == 'POST':
+        form = ClientUserForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            # new_user.first_name = username = request.POST.get('first_name','')
+            # new_user.last_name = username = request.POST.get('last_name','')
+            # new_user.email = username = request.POST.get('Email','')
+            new_user.is_staff = True
+            new_user.save()
+            return HttpResponseRedirect("/polls")
+    else:
+        form = ClientUserForm()
+    return render(request, "polls/register_vendeur.html", {
+        'form': form,
+    })
+
+
 # def loginVendeur(request):
 #     username = request.POST['username']
 #     password = request.POST['password']
@@ -222,4 +235,32 @@ def AuthenticateVendeur(request):
 #             # Return a 'disabled account' error message
 #     else:
 #         # Return an 'invalid login' error message.
+
+
+# class DetailView(generic.DetailView):
+#     model = Question
+#     template_name = 'polls/detail.html'
+    
+
+# class ResultsView(generic.DetailView):
+#     model = Question
+#     template_name = 'polls/results.html'
+    
+# def vote(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     try:
+#         selected_choice = question.choice_set.get(pk=request.POST['choice'])
+#     except (KeyError, Choice.DoesNotExist):
+#         # Redisplay the question voting form.
+#         return render(request, 'polls/detail.html', {
+#             'question': question,
+#             'error_message': "You didn't select a choice.",
+#         })
+#     else:
+#         selected_choice.votes += 1
+#         selected_choice.save()
+#         # Always return an HttpResponseRedirect after successfully dealing
+#         # with POST data. This prevents data from being posted twice if a
+#         # user hits the Back button.
+#         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 

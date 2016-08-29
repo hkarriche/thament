@@ -10,7 +10,8 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-
+from django.contrib.auth.models import Permission, Group
+from django.contrib.contenttypes.models import ContentType
 
 
 class AccountManager(BaseUserManager):
@@ -48,10 +49,11 @@ class VendorManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
         return user
-class Client(AbstractBaseUser):
-    email = models.EmailField('Email', unique=True, max_length=255)
-    first_name = models.CharField('First Name', max_length=70, default='', blank=True)
-    last_name = models.CharField('Last Name', max_length=70, default='', blank=True)
+class Person(AbstractBaseUser):
+    email = models.EmailField('Email', max_length=255)
+    first_name = models.CharField('Prenom', max_length=70, default='', blank=True)
+    last_name = models.CharField('Nom', max_length=70, default='', blank=True)
+    username = models.CharField('Utilisateur', unique=True, max_length=70, default='', blank=True)
     full_name = models.CharField('Full Name', max_length=150, default='', blank=True)
     login = models.CharField('login', max_length=150, default='', blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -59,9 +61,10 @@ class Client(AbstractBaseUser):
     is_active = models.BooleanField('Is Active', default=True)
     is_staff = models.BooleanField('Is Staff', default=False, db_index=True)
     is_superuser = models.BooleanField('Is Superuser', default=False, db_index=True)
+    groups = models.ForeignKey(Group, on_delete=models.CASCADE,null=True) 
 
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
     objects = AccountManager()
@@ -84,40 +87,45 @@ class Client(AbstractBaseUser):
 
 AbstractBaseUser._meta.get_field('password').verbose_name = _('password_client')
 
-class Vendeur(AbstractBaseUser):
-    email = models.EmailField('Email', unique=True, max_length=255)
-    first_name = models.CharField('First Name', max_length=70, default='', blank=True)
-    last_name = models.CharField('Last Name', max_length=70, default='', blank=True)
-    full_name = models.CharField('Full Name', max_length=150, default='', blank=True)
-    login = models.CharField('login', max_length=150, default='', blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField('Is Active', default=True)
-    is_staff = models.BooleanField('Is Staff', default=False, db_index=True)
-    is_superuser = models.BooleanField('Is Superuser', default=False, db_index=True)
+class Vendeur(Person):
+    choice_text = models.CharField(max_length=200)
+
+class Client(Person):
+    choice_text = models.CharField(max_length=200)
+#     email = models.EmailField('Email', max_length=255)
+#     first_name = models.CharField('Prenom', max_length=70, default='', blank=True)
+#     last_name = models.CharField('Nom', max_length=70, default='', blank=True)
+#     full_name = models.CharField('Full Name', max_length=150, default='', blank=True)
+#     username = models.CharField('utilisateur',unique=True, max_length=70, default='', blank=True)
+#     login = models.CharField('login', max_length=150, default='', blank=True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     modified = models.DateTimeField(auto_now=True)
+#     is_active = models.BooleanField('Is Active', default=True)
+#     is_staff = models.BooleanField('Is Staff', default=False, db_index=True)
+#     is_superuser = models.BooleanField('Is Superuser', default=False, db_index=True)
 
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+#     USERNAME_FIELD = 'username'
+#     REQUIRED_FIELDS = []
 
-    objects = VendorManager()
+#     objects = VendorManager()
 
-    class Meta:
-        ordering = ['-modified']
-        verbose_name_plural = 'Vendeurs'
+#     class Meta:
+#         ordering = ['-modified']
+#         verbose_name_plural = 'Vendeurs'
 
-    def get_full_name(self):
-        return self.full_name or "%s %s" % (self.first_name, self.last_name)
+#     def get_full_name(self):
+#         return self.full_name or "%s %s" % (self.first_name, self.last_name)
 
-    def get_short_name(self):
-        return self.first_name or self.email
+#     def get_short_name(self):
+#         return self.first_name or self.email
 
-    def has_perm(self, perm, obj=None):
-        return True
+#     def has_perm(self, perm, obj=None):
+#         return True
 
-    def has_module_perms(self, app_label):
-        return True
-AbstractBaseUser._meta.get_field('password').verbose_name = _('password_vendeur')
+#     def has_module_perms(self, app_label):
+#         return True
+# AbstractBaseUser._meta.get_field('password').verbose_name = _('password_vendeur')
 
 class Categorie(models.Model):
     nom_categorie = models.CharField(max_length=200)
@@ -156,8 +164,6 @@ class MessageContact(models.Model):
     tel = models.CharField(max_length=200,null=True)
     email = models.CharField(max_length=200,null=True)
     date_msg = models.DateTimeField(null=True)
-
-
 
 
 # class CustomUserManager(BaseUserManager):
@@ -254,30 +260,31 @@ class MessageContact(models.Model):
 #     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
 
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-    probability = models.IntegerField(default=0)
+# @python_2_unicode_compatible  # only if you need to support Python 2
+# class Question(models.Model):
+#     question_text = models.CharField(max_length=200)
+#     pub_date = models.DateTimeField('date published')
+#     probability = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.question_text
-    def was_published_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.pub_date <= now
-    was_published_recently.admin_order_field = 'pub_date'
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Published recently?'
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+#     def __str__(self):
+#         return self.question_text
+#     def was_published_recently(self):
+#         now = timezone.now()
+#         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+#     was_published_recently.admin_order_field = 'pub_date'
+#     was_published_recently.boolean = True
+#     was_published_recently.short_description = 'Published recently?'
+# @python_2_unicode_compatible  # only if you need to support Python 2
+# class Choice(models.Model):
+#     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+#     choice_text = models.CharField(max_length=200)
+#     votes = models.IntegerField(default=0)
 
 
-    def __str__(self):
-        return self.choice_text
+#     def __str__(self):
+#         return self.choice_text
 
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+#     def was_published_recently(self):
+#         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+
 
