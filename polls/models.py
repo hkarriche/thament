@@ -88,10 +88,10 @@ class Person(AbstractBaseUser):
 AbstractBaseUser._meta.get_field('password').verbose_name = _('password_client')
 
 class Vendeur(Person):
-    choice_text = models.CharField(max_length=200)
+    typePerson = models.CharField(max_length=200,blank=True)
 
 class Client(Person):
-    choice_text = models.CharField(max_length=200)
+    typePerson = models.CharField(max_length=200,blank=True)
 #     email = models.EmailField('Email', max_length=255)
 #     first_name = models.CharField('Prenom', max_length=70, default='', blank=True)
 #     last_name = models.CharField('Nom', max_length=70, default='', blank=True)
@@ -128,16 +128,16 @@ class Client(Person):
 # AbstractBaseUser._meta.get_field('password').verbose_name = _('password_vendeur')
 
 class Categorie(models.Model):
-    nom_categorie = models.CharField(max_length=200)
-    url_categorie = models.CharField(max_length=200) #HKA 21.08.2016 this field is added for the url in welcome page
+    nom_categorie = models.CharField('Nom', max_length=70, default='', blank=True)
+    url_categorie = models.CharField('URL', max_length=70, default='', blank=True) #HKA 21.08.2016 this field is added for the url in welcome page
 
 class Produit (models.Model):
-    ref_prod = models.CharField(max_length=200)
+    ref_prod = models.CharField('Reference', max_length=70, default='', blank=True)
     cat_prod = models.ForeignKey(Categorie, on_delete=models.CASCADE) 
-    des_prod = models.CharField(max_length=200) 
-    prix_prod = models.FloatField(null=True)
-    remise_prod = models.FloatField(null=True)
-    image_prod = models.ImageField(upload_to='polls/static/polls/images')
+    des_prod = models.CharField('Description', max_length=70, default='', blank=True) 
+    prix_prod = models.FloatField('Prix',null=True)
+    remise_prod = models.FloatField('Remise',null=True)
+    image_prod = models.ImageField('Image',null=True,upload_to='polls/static/polls/images')
 
 class Panier(models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
@@ -148,22 +148,22 @@ class Panier(models.Model):
 class Commande(models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
     ref_prod = models.ForeignKey(Produit, on_delete=models.CASCADE)
-    date_cmde = models.DateTimeField()
+    date_cmde = models.DateTimeField('Date Commande')
 
 class Facture (models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
     id_cmde = models.ForeignKey(Commande, on_delete=models.CASCADE)
-    montant_fact = models.CharField(max_length=200)
+    montant_fact = models.CharField('Montant Facture',max_length=200)
 
 
 class MessageContact(models.Model):
     num_msg = models.CharField(max_length=200,null=True)
     #login_clt = 
-    objet = models.CharField(max_length=200,null=True)
-    contenu = models.TextField(max_length=200,null=True)
-    tel = models.CharField(max_length=200,null=True)
-    email = models.CharField(max_length=200,null=True)
-    date_msg = models.DateTimeField(null=True)
+    objet = models.CharField('Objet',max_length=200,null=True)
+    contenu = models.TextField('Contenu',max_length=200,null=True)
+    tel = models.CharField('Tel',max_length=200,null=True)
+    email = models.CharField('Email',max_length=200,null=True)
+    date_msg = models.DateTimeField('Date Message',auto_now_add=True,null=True)
 
 
 # class CustomUserManager(BaseUserManager):

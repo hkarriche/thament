@@ -16,6 +16,7 @@ from django.contrib import auth
 from forms import MyCustomUserForm,ClientUserForm
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
+from guardian.shortcuts import remove_perm
 
 class IndexView(generic.ListView):
     context_object_name = 'produit_list'
@@ -167,10 +168,13 @@ def registerVendeur(request):
             # new_user.last_name = username = request.POST.get('last_name','')
             # new_user.email = username = request.POST.get('Email','')
             new_user.is_staff = True
-            group = Group.objects.get(name='vendeur')
+            remove_perm('polls|Categorie|Can add categorie', new_user, Categorie)
+            #group = Group.objects.get(name='vendeur')
             print ("############################")
+            print new_user
+            print remove_perm('polls|Categorie|Can add categorie', new_user, Categorie)
             #print group
-            new_user.groups = group 
+            #new_user.groups = group 
             new_user.save()
             return HttpResponseRedirect("/polls")
     else:

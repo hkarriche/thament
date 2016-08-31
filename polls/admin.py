@@ -9,39 +9,80 @@ from .models import Panier, Commande, Facture, Categorie, MessageContact
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 
-class CustomUserAdmin(UserAdmin):
-    # The forms to add and change user instances
 
-    # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin
-    # that reference the removed 'username' field
-    fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-    )
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
-        ),
-    )
-    form = CustomUserChangeForm
-    add_form = CustomUserCreationForm
-    list_display = ('email', 'first_name', 'last_name', 'is_staff')
-    search_fields = ('email', 'first_name', 'last_name')
-    ordering = ('email',)
+class CategorieAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,{'fields': ['nom_categorie']}),
+        (None, {'fields': ['url_categorie']}),
+    ]
+    #inlines = [CategorieInline]
+    list_display = ('nom_categorie','url_categorie')
+    list_filter = ['nom_categorie']
+    search_fields = ['nom_categorie']
 
+
+class MessageAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,{'fields': ['objet']}),
+        (None, {'fields': ['contenu']}),
+        (None, {'fields': ['email']}),
+        (None, {'fields': ['tel']}),
+    ]
+    list_display = ('objet','contenu','email','tel')
+
+class ProduitAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,{'fields': ['ref_prod']}),
+        (None, {'fields': ['des_prod']}),
+        (None, {'fields': ['prix_prod']}),
+        (None, {'fields': ['remise_prod']}),
+        (None, {'fields': ['cat_prod']}),
+
+    ]
+    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod')  
+    
+
+
+class PanierAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,{'fields': ['id_clt']}),
+        (None, {'fields': ['ref_prod']}),
+        (None, {'fields': ['quantite_produit']}),
+        
+
+    ]
+    list_display = ('id_clt','ref_prod','quantite_produit')
+
+ 
+
+class FactureAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,{'fields': ['id_clt']}),
+        (None, {'fields': ['id_cmde']}),
+        (None, {'fields': ['montant_fact']}),
+        
+
+    ]
+    list_display = ('id_clt','id_cmde','montant_fact')
+
+
+class CommandeAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,{'fields': ['id_clt']}),
+        (None, {'fields': ['ref_prod']}),
+        (None, {'fields': ['date_cmde']}),
+        
+
+    ]
+    list_display = ('id_clt','ref_prod','date_cmde')
 admin.site.register(Client)
 admin.site.register(Vendeur)
-admin.site.register(Produit)
-admin.site.register(Categorie)
-admin.site.register(Panier)
-admin.site.register(Commande)
-admin.site.register(Facture)
-admin.site.register(MessageContact)
+admin.site.register(Produit,ProduitAdmin)
+admin.site.register(Categorie,CategorieAdmin)
+admin.site.register(Panier,PanierAdmin)
+admin.site.register(Commande,CommandeAdmin)
+admin.site.register(Facture,FactureAdmin)
+admin.site.register(MessageContact,MessageAdmin)
 #admin.site.register(Client, CustomUserAdmin)
 
 
@@ -69,3 +110,29 @@ admin.site.register(MessageContact)
 #     inlines = [useriline]
 # admin.site.register(UserDetails, UserAdmin)
 # admin.site.register(Client)
+
+
+class CustomUserAdmin(UserAdmin):
+    # The forms to add and change user instances
+
+    # The fields to be used in displaying the User model.
+    # These override the definitions on the base UserAdmin
+    # that reference the removed 'username' field
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2')}
+        ),
+    )
+    form = CustomUserChangeForm
+    add_form = CustomUserCreationForm
+    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    search_fields = ('email', 'first_name', 'last_name')
+    ordering = ('email',)

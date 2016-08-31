@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'guardian',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -140,3 +141,8 @@ STATIC_URL = '/static/'
 
 #AUTH_USER_MODEL = "polls.Vendeur"
 AUTH_USER_MODEL = "polls.Person"
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # default
+    'guardian.backends.ObjectPermissionBackend',
+)
