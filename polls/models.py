@@ -92,40 +92,6 @@ class Vendeur(Person):
 
 class Client(Person):
     typePerson = models.CharField(max_length=200,blank=True)
-#     email = models.EmailField('Email', max_length=255)
-#     first_name = models.CharField('Prenom', max_length=70, default='', blank=True)
-#     last_name = models.CharField('Nom', max_length=70, default='', blank=True)
-#     full_name = models.CharField('Full Name', max_length=150, default='', blank=True)
-#     username = models.CharField('utilisateur',unique=True, max_length=70, default='', blank=True)
-#     login = models.CharField('login', max_length=150, default='', blank=True)
-#     created = models.DateTimeField(auto_now_add=True)
-#     modified = models.DateTimeField(auto_now=True)
-#     is_active = models.BooleanField('Is Active', default=True)
-#     is_staff = models.BooleanField('Is Staff', default=False, db_index=True)
-#     is_superuser = models.BooleanField('Is Superuser', default=False, db_index=True)
-
-
-#     USERNAME_FIELD = 'username'
-#     REQUIRED_FIELDS = []
-
-#     objects = VendorManager()
-
-#     class Meta:
-#         ordering = ['-modified']
-#         verbose_name_plural = 'Vendeurs'
-
-#     def get_full_name(self):
-#         return self.full_name or "%s %s" % (self.first_name, self.last_name)
-
-#     def get_short_name(self):
-#         return self.first_name or self.email
-
-#     def has_perm(self, perm, obj=None):
-#         return True
-
-#     def has_module_perms(self, app_label):
-#         return True
-# AbstractBaseUser._meta.get_field('password').verbose_name = _('password_vendeur')
 
 class Categorie(models.Model):
     nom_categorie = models.CharField('Nom', max_length=70, default='', blank=True)
@@ -138,17 +104,24 @@ class Produit (models.Model):
     prix_prod = models.FloatField('Prix',null=True)
     remise_prod = models.FloatField('Remise',null=True)
     image_prod = models.ImageField('Image',null=True,upload_to='polls/static/polls/images')
+    bulletin_analyse = models.ImageField('bulletin analyse',null=True,upload_to='polls/static/polls/images')
+    def categorie_produit(self):
+        return self.cat_prod.nom_categorie
 
 class Panier(models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
     ref_prod = models.ForeignKey(Produit, on_delete=models.CASCADE)
     quantite_produit = models.IntegerField()
+    def reference_produit(self):
+        return self.ref_prod.ref_prod
 
 
 class Commande(models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
     ref_prod = models.ForeignKey(Produit, on_delete=models.CASCADE)
     date_cmde = models.DateTimeField('Date Commande')
+    def reference_produit(self):
+        return self.ref_prod.ref_prod
 
 class Facture (models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)

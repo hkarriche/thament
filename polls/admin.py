@@ -19,6 +19,7 @@ class CategorieAdmin(admin.ModelAdmin):
     list_display = ('nom_categorie','url_categorie')
     list_filter = ['nom_categorie']
     search_fields = ['nom_categorie']
+    
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -30,6 +31,8 @@ class MessageAdmin(admin.ModelAdmin):
     ]
     list_display = ('objet','contenu','email','tel')
 
+
+
 class ProduitAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,{'fields': ['ref_prod']}),
@@ -37,9 +40,12 @@ class ProduitAdmin(admin.ModelAdmin):
         (None, {'fields': ['prix_prod']}),
         (None, {'fields': ['remise_prod']}),
         (None, {'fields': ['cat_prod']}),
+        (None, {'fields': ['bulletin_analyse']}),
+
 
     ]
-    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod')  
+    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse')
+      
     
 
 
@@ -51,7 +57,7 @@ class PanierAdmin(admin.ModelAdmin):
         
 
     ]
-    list_display = ('id_clt','ref_prod','quantite_produit')
+    list_display = ('id_clt','quantite_produit','reference_produit')
 
  
 
@@ -74,7 +80,22 @@ class CommandeAdmin(admin.ModelAdmin):
         
 
     ]
-    list_display = ('id_clt','ref_prod','date_cmde')
+    list_display = ('id_clt','reference_produit','date_cmde')
+
+# HKA 01.09.2016 Display categorie in produit list display
+
+def unbound_callable(produit):
+    return produit.cat_prod.nom_categorie
+class ProduitInline(admin.TabularInline):
+    model = Produit
+    fields = ('ref_prod', 'model_callable')
+    #readonly_fields = ('model_callable', 'model_admin_callable', unbound_callable
+# class ProduitAdmin(admin.ModelAdmin):
+#     model = Produit
+#     #inlines = (ProduitInline,)
+#     list_display('ref_prod','model_callable')
+
+
 admin.site.register(Client)
 admin.site.register(Vendeur)
 admin.site.register(Produit,ProduitAdmin)

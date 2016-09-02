@@ -35,7 +35,12 @@ class IndexView(generic.ListView):
 class OliveView(generic.ListView):
     context_object_name = 'olives_list'
     template_name = 'polls/olives.html'
-    queryset = Produit.objects.all()
+    try :
+        cat_olives = Categorie.objects.get(nom_categorie="Huile d'olives")
+        queryset = Produit.objects.all().filter(cat_prod=cat_olives)
+    except :
+        queryset = {}
+    
 
 
     def get_context_data(self, **kwargs):
@@ -46,8 +51,11 @@ class OliveView(generic.ListView):
 class OleastreView(generic.ListView):
     context_object_name = 'oleastres_list'
     template_name = 'polls/oleastres.html'
-    queryset = Produit.objects.all()
-    
+    try :
+        cat_oleastres = Categorie.objects.get(nom_categorie="Huile d'oleastres")
+        queryset = Produit.objects.all().filter(cat_prod=cat_oleastres)
+    except :
+        queryset = {}
 
     def get_context_data(self, **kwargs):
         context = super(OleastreView, self).get_context_data(**kwargs)
@@ -57,8 +65,12 @@ class OleastreView(generic.ListView):
 class LentisqueView(generic.ListView):
     context_object_name = 'lentisques_list'
     template_name = 'polls/lentisques.html'
-    queryset = Produit.objects.all()
-    
+    try :
+        cat_lentisques = Categorie.objects.get(nom_categorie="Huile de lentisques")
+        queryset = Produit.objects.all().filter(cat_prod=cat_lentisques)
+    except :
+        queryset = {}
+       
 
     def get_context_data(self, **kwargs):
         context = super(LentisqueView, self).get_context_data(**kwargs)
@@ -68,7 +80,11 @@ class LentisqueView(generic.ListView):
 class MielView(generic.ListView):
     context_object_name = 'miel_list'
     template_name = 'polls/miel.html'
-    queryset = Produit.objects.all()
+    try :
+        cat_miel = Categorie.objects.get(nom_categorie="Miel")
+        queryset = Produit.objects.all().filter(cat_prod=cat_miel)
+    except :
+        queryset = {}
     
 
     def get_context_data(self, **kwargs):
@@ -76,21 +92,15 @@ class MielView(generic.ListView):
         context['categories'] = Categorie.objects.all()
         return context
 
-class LentisqueView(generic.ListView):
-    context_object_name = 'dattes_list'
-    template_name = 'polls/dattes.html'
-    queryset = Produit.objects.all()
-    
-
-    def get_context_data(self, **kwargs):
-        context = super(LentisqueView, self).get_context_data(**kwargs)
-        context['categories'] = Categorie.objects.all()
-        return context
 
 class FiguesView(generic.ListView):
     context_object_name = 'figues_list'
     template_name = 'polls/figues.html'
-    queryset = Produit.objects.all()
+    try :
+        cat_figues = Categorie.objects.get(nom_categorie="Figues")
+        queryset = Produit.objects.all().filter(cat_prod=cat_figues)
+    except :
+        queryset = {}
     
 
     def get_context_data(self, **kwargs):
@@ -101,7 +111,11 @@ class FiguesView(generic.ListView):
 class DattesView(generic.ListView):
     context_object_name = 'dattes_list'
     template_name = 'polls/dattes.html'
-    queryset = Produit.objects.all()
+    try :
+        cat_dattes = Categorie.objects.get(nom_categorie="Dattes")
+        queryset = Produit.objects.all().filter(cat_prod=cat_dattes)
+    except :
+        queryset = {}
     
 
     def get_context_data(self, **kwargs):
@@ -112,7 +126,11 @@ class DattesView(generic.ListView):
 class RaisinsView(generic.ListView):
     context_object_name = 'raisins_list'
     template_name = 'polls/raisins.html'
-    queryset = Produit.objects.all()
+    try :
+        cat_raisin = Categorie.objects.get(nom_categorie="Raisin sec")
+        queryset = Produit.objects.all().filter(cat_prod=cat_raisin)
+    except :
+        queryset = {}
     
 
     def get_context_data(self, **kwargs):
@@ -123,7 +141,11 @@ class RaisinsView(generic.ListView):
 class PistachesView(generic.ListView):
     context_object_name = 'pistaches_list'
     template_name = 'polls/pistaches.html'
-    queryset = Produit.objects.all()
+    try :
+        cat_pistaches = Categorie.objects.get(nom_categorie="Pistaches")
+        queryset = Produit.objects.all().filter(cat_prod=cat_pistaches)
+    except :
+        queryset = {}
     
 
     def get_context_data(self, **kwargs):
