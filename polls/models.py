@@ -97,6 +97,9 @@ class Client(Person):
 class Categorie(models.Model):
     nom_categorie = models.CharField('Nom', max_length=70, default='', blank=True)
     url_categorie = models.CharField('URL', max_length=70, default='', blank=True) #HKA 21.08.2016 this field is added for the url in welcome page
+    #HKA 03.09.2016 this function display the name of categorie in product insertion page
+    def __unicode__(self): 
+        return u'%s [%s]' % (self.nom_categorie, self.url_categorie)
 
 class Produit (models.Model):
     ref_prod = models.CharField('Reference', max_length=70, default='', blank=True)

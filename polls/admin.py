@@ -34,6 +34,8 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 class ProduitAdmin(admin.ModelAdmin):
+    def level(self, obj):
+        return obj.cat_prod.nom_categorie
     fieldsets = [
         (None,{'fields': ['ref_prod']}),
         (None, {'fields': ['des_prod']}),
@@ -42,13 +44,14 @@ class ProduitAdmin(admin.ModelAdmin):
         (None, {'fields': ['cat_prod']}),
         (None, {'fields': ['image_prod']}),
         (None, {'fields': ['bulletin_analyse']}),
+        #(None, {'fields': ['level']}),
 
 
     ]
     list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse','image_prod')
-      
+    # def categorie_produitt(self):
+    #     return self.cat_prod.nom_categorie
     
-
 
 class PanierAdmin(admin.ModelAdmin):
     fieldsets = [
