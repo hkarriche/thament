@@ -257,9 +257,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="agile_top_brands_grids">
 				
    
-   {% if olives_list %}
+   {% if dattes_list %}
 
-    {% for olive in olives_list %}
+    {% for datte in dattes_list %}
         
     
 				<div class="col-md-3 top_brand_left">
@@ -270,9 +270,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<figure>
 									<div class="snipcart-item block" >
 										<div class="snipcart-thumb">
-											<a href=""><img title="{{ olive.ref_prod }} " alt=" " src="{% static 'polls/images/1.png' %}" /></a>		
-											<p>{{ olive.ref_prod }}</p>
-											<h4>DA {{ olive.prix_prod }}<span></span></h4>
+											<a href="/polls{{ datte.image_prod.url }}"><img title="{{ olive.ref_prod }} " alt=" " src="/polls{{ datte.image_prod.url }}" /></a>		
+											<p>{{ datte.ref_prod }}</p>
+											<h4>DA {{ datte.prix_prod }}<span></span></h4>
 										</div>
 										<div class="snipcart-details top_brand_home_details">
 											<form action="#" method="post">

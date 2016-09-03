@@ -71,8 +71,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="mega-dropdown-menu">
 						<div class="w3ls_vegetables">
 							<ul class="dropdown-menu drp-mnu">
-								<li><a href="login.html">Login</a></li> 
-								<li><a href="login.html">Sign Up</a></li>
+								<li><a href="/polls/client/login">Se connecter</a></li> 
+								<li><a href="/polls/register/client">Créer un compte</a></li>
 							</ul>
 						</div>                  
 					</div>	
@@ -270,7 +270,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<figure>
 									<div class="snipcart-item block" >
 										<div class="snipcart-thumb">
-											<a href="{{ olive.image_prod }}"><img title="{{ olive.ref_prod }} " alt=" " src="{{ olive.image_prod }}" /></a>		
+											<a href="/polls{{ olive.image_prod.url }}"><img title="{{ olive.ref_prod }} " alt=" " src="/polls{{ olive.image_prod.url }}" /></a>		
 											<p>{{ olive.ref_prod }} </p>
 											<h4>DA {{ olive.prix_prod }}<span></span></h4>
 										</div>
