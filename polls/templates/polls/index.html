@@ -179,7 +179,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="w3l_banner_nav_right_banner">
 								<h3>Déguster <span>Nos</span> produits.</h3>
 								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+									<a href="/polls/olives" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
 								</div>
 							</div>
 						</li>
@@ -272,8 +272,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<figure>
 									<div class="snipcart-item block" >
 										<div class="snipcart-thumb">
-				<a href=""><img title="{{ olive.ref_prod }} " alt=" " src="" /></a>		
-											<p>{{ olive.ref_prod }}</p>
+				<a href="/polls{{ olive.image_prod.url }}"><img title="/{{ olive.ref_prod }} " alt=" " src="/polls{{ olive.image_prod.url }}" /></a>		
+											<p>{{ olive.ref_prod }} </p>
 											<h4>DA {{ olive.prix_prod }}<span></span></h4>
 										</div>
 										<div class="snipcart-details top_brand_home_details">

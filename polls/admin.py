@@ -40,11 +40,12 @@ class ProduitAdmin(admin.ModelAdmin):
         (None, {'fields': ['prix_prod']}),
         (None, {'fields': ['remise_prod']}),
         (None, {'fields': ['cat_prod']}),
+        (None, {'fields': ['image_prod']}),
         (None, {'fields': ['bulletin_analyse']}),
 
 
     ]
-    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse')
+    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse','image_prod')
       
     
 

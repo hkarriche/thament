@@ -14,6 +14,7 @@ from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 
 
+
 class AccountManager(BaseUserManager):
 
     def create_user(self, email, password=None):
@@ -103,8 +104,8 @@ class Produit (models.Model):
     des_prod = models.CharField('Description', max_length=70, default='', blank=True) 
     prix_prod = models.FloatField('Prix',null=True)
     remise_prod = models.FloatField('Remise',null=True)
-    image_prod = models.ImageField('Image',null=True,upload_to='polls/static/polls/images')
-    bulletin_analyse = models.ImageField('bulletin analyse',null=True,upload_to='polls/static/polls/images')
+    image_prod = models.ImageField('Image',blank=True)
+    bulletin_analyse = models.ImageField('bulletin analyse',blank=True,upload_to='polls/static/polls/images')
     def categorie_produit(self):
         return self.cat_prod.nom_categorie
 

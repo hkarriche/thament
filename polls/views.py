@@ -17,6 +17,7 @@ from forms import MyCustomUserForm,ClientUserForm
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 from guardian.shortcuts import remove_perm
+import base64
 
 class IndexView(generic.ListView):
     context_object_name = 'produit_list'
@@ -40,11 +41,15 @@ class OliveView(generic.ListView):
         queryset = Produit.objects.all().filter(cat_prod=cat_olives)
     except :
         queryset = {}
-    
+
+   
+     
 
 
     def get_context_data(self, **kwargs):
         context = super(OliveView, self).get_context_data(**kwargs)
+        # olives = Produit.objects.all().filter(cat_prod=cat_olives)
+        # encoded_string = base64.b64encode(olives.image_prod)
         context['categories'] = Categorie.objects.all()
         return context
 
