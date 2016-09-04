@@ -12,12 +12,12 @@ class MessageContactForm(forms.ModelForm):
 class MyCustomUserForm(RegistrationForm):
     class Meta:
         model = Vendeur
-        fields = ("first_name","last_name","email","username")
+        fields = ("first_name","last_name","email")
 
 class ClientUserForm(RegistrationForm):
     class Meta:
         model = Client
-        fields = ("first_name","last_name","email","username")
+        fields = ("first_name","last_name","email")
 
 
 

@@ -15,78 +15,175 @@ from django.contrib.contenttypes.models import ContentType
 
 
 
-class AccountManager(BaseUserManager):
+# class AccountManager(BaseUserManager):
 
-    def create_user(self, email, password=None):
+#     def create_user(self, email, password=None):
+#         if not email:
+#             raise ValueError('Must have an email address')
+
+#         user = self.model(email=self.normalize_email(email))
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
+
+#     def create_superuser(self, email, password):
+#         user = self.create_user(email, password=password)
+#         user.is_staff = True
+#         user.is_superuser = True
+#         user.save(using=self._db)
+#         return user
+
+# class VendorManager(BaseUserManager):
+
+#     def create_user(self, email, password=None):
+#         if not email:
+#             raise ValueError('Must have an email address')
+
+#         user = self.model(email=self.normalize_email(email))
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
+
+#     def create_superuser(self, email, password):
+#         user = self.create_user(email, password=password)
+#         user.is_staff = True
+#         user.is_superuser = True
+#         user.save(using=self._db)
+#         return user
+# class Person(AbstractBaseUser):
+#     email = models.EmailField('Email', max_length=255)
+#     first_name = models.CharField('Prenom', max_length=70, default='', blank=True)
+#     last_name = models.CharField('Nom', max_length=70, default='', blank=True)
+#     username = models.CharField('Utilisateur', unique=True, max_length=70, default='', blank=True)
+#     full_name = models.CharField('Full Name', max_length=150, default='', blank=True)
+#     login = models.CharField('login', max_length=150, default='', blank=True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     modified = models.DateTimeField(auto_now=True)
+#     is_active = models.BooleanField('Is Active', default=True)
+#     is_staff = models.BooleanField('Is Staff', default=False, db_index=True)
+#     is_superuser = models.BooleanField('Is Superuser', default=False, db_index=True)
+#     groups = models.ForeignKey(Group, on_delete=models.CASCADE,null=True) 
+
+
+#     USERNAME_FIELD = 'username'
+#     REQUIRED_FIELDS = []
+
+#     objects = AccountManager()
+
+#     class Meta:
+#         ordering = ['-modified']
+#         verbose_name_plural = 'Clients'
+
+#     def get_full_name(self):
+#         return self.full_name or "%s %s" % (self.first_name, self.last_name)
+
+#     def get_short_name(self):
+#         return self.first_name or self.email
+
+#     def has_perm(self, perm, obj=None):
+#         return True
+
+#     def has_module_perms(self, app_label):
+#         return True
+
+# AbstractBaseUser._meta.get_field('password').verbose_name = _('password_client')
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email=None, password=None, **extra_fields):
+        """
+        Creates and saves a User with the given email and password.
+        """
+        now = timezone.now()
         if not email:
-            raise ValueError('Must have an email address')
+            raise ValueError('The given email must be set')
+        email = CustomUserManager.normalize_email(email)
+        user = self.model(email=email,
+                          is_staff=False, is_active=True, is_superuser=False,
+                          last_login=now, date_joined=now, **extra_fields)
 
-        user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
-        user = self.create_user(email, password=password)
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
+    def create_superuser(self, email, password, **extra_fields):
+        u = self.create_user(email, password, **extra_fields)
+        u.is_staff = True
+        u.is_active = True
+        u.is_superuser = True
+        u.save(using=self._db)
+        return u
+class Person(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_('email (Utilisateur)'), unique=True)
+    #username = models.CharField('Utilisateur', unique=True, max_length=70, default='', blank=True)
+    first_name = models.CharField(_('Prenom'), max_length=30, blank=True)
+    middle_name = models.CharField(_('middle name'), max_length=30, blank=True)
+    last_name = models.CharField(_('Nom'), max_length=30, blank=True)
+    #groups = models.ForeignKey(Group, on_delete=models.CASCADE,null=True)
+    is_staff = models.BooleanField(_('staff status'), default=True,
+        help_text=_('Designates whether the user can log into this admin '
+                    'site.'))
+    is_active = models.BooleanField(_('active'), default=True,
+        help_text=_('Designates whether this user should be treated as '
+                    'active. Unselect this instead of deleting accounts.'))
+    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-class VendorManager(BaseUserManager):
+    objects = CustomUserManager()
 
-    def create_user(self, email, password=None):
-        if not email:
-            raise ValueError('Must have an email address')
+    USERNAME_FIELD = 'email'
 
-        user = self.model(email=self.normalize_email(email))
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password):
-        user = self.create_user(email, password=password)
-        user.is_staff = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
-class Person(AbstractBaseUser):
-    email = models.EmailField('Email', max_length=255)
-    first_name = models.CharField('Prenom', max_length=70, default='', blank=True)
-    last_name = models.CharField('Nom', max_length=70, default='', blank=True)
-    username = models.CharField('Utilisateur', unique=True, max_length=70, default='', blank=True)
-    full_name = models.CharField('Full Name', max_length=150, default='', blank=True)
-    login = models.CharField('login', max_length=150, default='', blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField('Is Active', default=True)
-    is_staff = models.BooleanField('Is Staff', default=False, db_index=True)
-    is_superuser = models.BooleanField('Is Superuser', default=False, db_index=True)
-    groups = models.ForeignKey(Group, on_delete=models.CASCADE,null=True) 
-
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
-
-    objects = AccountManager()
-
-    class Meta:
-        ordering = ['-modified']
-        verbose_name_plural = 'Clients'
+    def get_absolute_url(self):
+        return "/users/%s/" % urlquote(self.username)
 
     def get_full_name(self):
-        return self.full_name or "%s %s" % (self.first_name, self.last_name)
+        """
+        Returns the first_name plus the last_name, with a space in between.
+        """
+        full_name = '%s %s' % (self.first_name, self.last_name)
+        return full_name.strip()
 
     def get_short_name(self):
-        return self.first_name or self.email
+        "Returns the short name for the user."
+        return self.first_name
 
-    def has_perm(self, perm, obj=None):
-        return True
+    def email_user(self, subject, message, from_email=None):
+        """
+        Sends an email to this User.
+        """
+        send_mail(subject, message, from_email, [self.email])
 
-    def has_module_perms(self, app_label):
-        return True
+    def get_profile(self):
+        """
+        Returns site-specific profile for this user. Raises
+        SiteProfileNotAvailable if this site does not allow profiles.
+        """
+        warnings.warn("The use of AUTH_PROFILE_MODULE to define user profiles"
+                      " has been deprecated.",
+            PendingDeprecationWarning)
+        if not hasattr(self, '_profile_cache'):
+            from django.conf import settings
+            if not getattr(settings, 'AUTH_PROFILE_MODULE', False):
+                raise SiteProfileNotAvailable(
+                    'You need to set AUTH_PROFILE_MODULE in your project '
+                    'settings')
+            try:
+                app_label, model_name = settings.AUTH_PROFILE_MODULE.split('.')
+            except ValueError:
+                raise SiteProfileNotAvailable(
+                    'app_label and model_name should be separated by a dot in '
+                    'the AUTH_PROFILE_MODULE setting')
+            try:
+                model = models.get_model(app_label, model_name)
+                if model is None:
+                    raise SiteProfileNotAvailable(
+                        'Unable to load the profile model, check '
+                        'AUTH_PROFILE_MODULE in your project settings')
+                self._profile_cache = model._default_manager.using(
+                                   self._state.db).get(user__id__exact=self.id)
+                self._profile_cache.user = self
+            except (ImportError, ImproperlyConfigured):
+                raise SiteProfileNotAvailable
+        return self._profile_cache
 
-AbstractBaseUser._meta.get_field('password').verbose_name = _('password_client')
 
 class Vendeur(Person):
     typePerson = models.CharField(max_length=200,blank=True)
@@ -97,8 +194,7 @@ class Client(Person):
 class Categorie(models.Model):
     nom_categorie = models.CharField('Nom', max_length=70, default='', blank=True)
     url_categorie = models.CharField('URL', max_length=70, default='', blank=True) #HKA 21.08.2016 this field is added for the url in welcome page
-    #HKA 03.09.2016 this function display the name of categorie in product insertion page
-    def __unicode__(self): 
+    def __unicode__(self): #HKA 03.09.2016 this function display the name of categorie in product insertion page
         return u'%s [%s]' % (self.nom_categorie, self.url_categorie)
 
 class Produit (models.Model):
