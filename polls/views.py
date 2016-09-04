@@ -196,7 +196,7 @@ def registerVendeur(request):
             # new_user.email = username = request.POST.get('Email','')
             new_user.is_staff = True
             group = Group.objects.get(name='vendeur')
-            print group
+            group.user_set.add(new_user)
             #new_user.groups = group
             # new_user.save()
             
@@ -245,8 +245,8 @@ def registerClient(request):
             new_user.save()
             
             group = Group.objects.get(name='client')
-            # new_user.groups = group
-            new_user.save()
+            group.user_set.add(new_user)
+            
 
             return HttpResponseRedirect("/polls")
     else:
