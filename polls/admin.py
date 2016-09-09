@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 # Register your models here.
 from .models import  Client, Vendeur, Produit
 # from .models import Choice,Client
-from .models import Panier, Commande, Facture, Categorie, MessageContact
+from .models import Panier, Commande, Facture, Categorie, MessageContact,methode_paiement
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 
@@ -70,6 +70,7 @@ class FactureAdmin(admin.ModelAdmin):
         (None,{'fields': ['id_clt']}),
         (None, {'fields': ['id_cmde']}),
         (None, {'fields': ['montant_fact']}),
+       
         
 
     ]
@@ -81,10 +82,13 @@ class CommandeAdmin(admin.ModelAdmin):
         (None,{'fields': ['id_clt']}),
         (None, {'fields': ['ref_prod']}),
         (None, {'fields': ['date_cmde']}),
+        (None, {'fields': ['meth_paiemet']}),
+        (None, {'fields': ['adresse_livraison']}),
+        (None, {'fields': ['adresse_facturation']}),
         
 
     ]
-    list_display = ('id_clt','reference_produit','date_cmde')
+    list_display = ('id_clt','reference_produit','date_cmde','meth_paiemet','adresse_livraison','adresse_facturation')
 
 # HKA 01.09.2016 Display categorie in produit list display
 
@@ -108,7 +112,7 @@ admin.site.register(Panier,PanierAdmin)
 admin.site.register(Commande,CommandeAdmin)
 admin.site.register(Facture,FactureAdmin)
 admin.site.register(MessageContact,MessageAdmin)
-#admin.site.register(Client, CustomUserAdmin)
+admin.site.register(methode_paiement)
 
 
 # class ChoiceInline(admin.TabularInline):

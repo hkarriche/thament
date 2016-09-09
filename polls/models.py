@@ -14,80 +14,6 @@ from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 
 
-
-# class AccountManager(BaseUserManager):
-
-#     def create_user(self, email, password=None):
-#         if not email:
-#             raise ValueError('Must have an email address')
-
-#         user = self.model(email=self.normalize_email(email))
-#         user.set_password(password)
-#         user.save(using=self._db)
-#         return user
-
-#     def create_superuser(self, email, password):
-#         user = self.create_user(email, password=password)
-#         user.is_staff = True
-#         user.is_superuser = True
-#         user.save(using=self._db)
-#         return user
-
-# class VendorManager(BaseUserManager):
-
-#     def create_user(self, email, password=None):
-#         if not email:
-#             raise ValueError('Must have an email address')
-
-#         user = self.model(email=self.normalize_email(email))
-#         user.set_password(password)
-#         user.save(using=self._db)
-#         return user
-
-#     def create_superuser(self, email, password):
-#         user = self.create_user(email, password=password)
-#         user.is_staff = True
-#         user.is_superuser = True
-#         user.save(using=self._db)
-#         return user
-# class Person(AbstractBaseUser):
-#     email = models.EmailField('Email', max_length=255)
-#     first_name = models.CharField('Prenom', max_length=70, default='', blank=True)
-#     last_name = models.CharField('Nom', max_length=70, default='', blank=True)
-#     username = models.CharField('Utilisateur', unique=True, max_length=70, default='', blank=True)
-#     full_name = models.CharField('Full Name', max_length=150, default='', blank=True)
-#     login = models.CharField('login', max_length=150, default='', blank=True)
-#     created = models.DateTimeField(auto_now_add=True)
-#     modified = models.DateTimeField(auto_now=True)
-#     is_active = models.BooleanField('Is Active', default=True)
-#     is_staff = models.BooleanField('Is Staff', default=False, db_index=True)
-#     is_superuser = models.BooleanField('Is Superuser', default=False, db_index=True)
-#     groups = models.ForeignKey(Group, on_delete=models.CASCADE,null=True) 
-
-
-#     USERNAME_FIELD = 'username'
-#     REQUIRED_FIELDS = []
-
-#     objects = AccountManager()
-
-#     class Meta:
-#         ordering = ['-modified']
-#         verbose_name_plural = 'Clients'
-
-#     def get_full_name(self):
-#         return self.full_name or "%s %s" % (self.first_name, self.last_name)
-
-#     def get_short_name(self):
-#         return self.first_name or self.email
-
-#     def has_perm(self, perm, obj=None):
-#         return True
-
-#     def has_module_perms(self, app_label):
-#         return True
-
-# AbstractBaseUser._meta.get_field('password').verbose_name = _('password_client')
-
 class CustomUserManager(BaseUserManager):
     def create_user(self, email=None, password=None, **extra_fields):
         """
@@ -207,6 +133,8 @@ class Produit (models.Model):
     bulletin_analyse = models.ImageField('bulletin analyse',blank=True,upload_to='polls/static/polls/images')
     def categorie_produit(self):
         return self.cat_prod.nom_categorie
+    def __unicode__(self): #HKA 03.09.2016 this function display the name of categorie in product insertion page
+        return u'%s ' % (self.ref_prod)
 
 class Panier(models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
@@ -215,10 +143,22 @@ class Panier(models.Model):
     def reference_produit(self):
         return self.ref_prod.ref_prod
 
+#HKA 06.09.2016 add payment method 
+class methode_paiement (models.Model):
+    nom_methode = models.CharField(max_length=200,null=True)
+    def __unicode__(self): 
+        return u'%s ' % (self.nom_methode)
+
+
+
 
 class Commande(models.Model):
+    owner = models.CharField(max_length=200,null=True) #HKA 06.09.2016 The owner is the id of the client
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
     ref_prod = models.ForeignKey(Produit, on_delete=models.CASCADE)
+    meth_paiemet = models.ForeignKey(methode_paiement, on_delete=models.CASCADE)
+    adresse_livraison = models.CharField('Adresse Livraison', max_length=200, default='', blank=True) 
+    adresse_facturation = models.CharField('Adresse Facturation', max_length=200, default='', blank=True) 
     date_cmde = models.DateTimeField('Date Commande')
     def reference_produit(self):
         return self.ref_prod.ref_prod
@@ -237,6 +177,7 @@ class MessageContact(models.Model):
     tel = models.CharField('Tel',max_length=200,null=True)
     email = models.CharField('Email',max_length=200,null=True)
     date_msg = models.DateTimeField('Date Message',auto_now_add=True,null=True)
+
 
 
 # class CustomUserManager(BaseUserManager):

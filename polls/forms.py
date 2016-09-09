@@ -1,12 +1,18 @@
 from django import forms
-from models import MessageContact, Client, Vendeur
+from models import MessageContact, Client, Vendeur,Commande
 from registration.forms import RegistrationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+# from address.forms import AddressField
 
 class MessageContactForm(forms.ModelForm):
 	class Meta :
 		model = MessageContact
 		fields = ('email','objet','contenu', 'tel')
+
+class CommandeForm(forms.ModelForm):
+    class Meta:
+        model = Commande
+        fields=('id_clt','ref_prod','adresse_livraison','adresse_facturation','meth_paiemet')
 
 
 class MyCustomUserForm(RegistrationForm):
@@ -18,6 +24,9 @@ class ClientUserForm(RegistrationForm):
     class Meta:
         model = Client
         fields = ("first_name","last_name","email")
+
+# class PersonForm(forms.Form):
+#   address = AddressField()
 
 
 

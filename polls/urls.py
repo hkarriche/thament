@@ -6,7 +6,7 @@ from . import views
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from forms import MyCustomUserForm, ClientUserForm
+from forms import MyCustomUserForm, ClientUserForm,CommandeForm
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.static import serve
@@ -43,8 +43,9 @@ urlpatterns = [
     url(r'^accounts/register/$',RegistrationView.as_view(form_class=MyCustomUserForm),name='registration_register',),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     #url(r'^site_media/(.*)$', 'django.views.static.serve', {'document_root' : settings.MEDIA_ROOT}),
-    url(r'^site_media/(.*)$', serve, {'document_root': settings.MEDIA_ROOT,
-    }),
+    # HKA 07.09.2016
+    url(r'^site_media/(.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),
+    url('^commander', CreateView.as_view(template_name='polls/commander.html',form_class=CommandeForm,success_url='/polls')),
 
 ]
 
