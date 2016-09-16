@@ -1,18 +1,21 @@
 from django import forms
-from models import MessageContact, Client, Vendeur,Commande
+from models import MessageContact, Client, Vendeur, Produit
 from registration.forms import RegistrationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 # from address.forms import AddressField
+
 
 class MessageContactForm(forms.ModelForm):
 	class Meta :
 		model = MessageContact
 		fields = ('email','objet','contenu', 'tel')
 
-class CommandeForm(forms.ModelForm):
-    class Meta:
-        model = Commande
-        fields=('id_clt','ref_prod','adresse_livraison','adresse_facturation','meth_paiemet')
+
+
+# class CommandeForm(forms.ModelForm):
+#     class Meta:
+#         model = Commande
+#         fields=('id_clt','adresse_livraison','adresse_facturation')
 
 
 class MyCustomUserForm(RegistrationForm):
@@ -25,9 +28,28 @@ class ClientUserForm(RegistrationForm):
         model = Client
         fields = ("first_name","last_name","email")
 
-# class PersonForm(forms.Form):
-#   address = AddressField()
 
+
+# class CommandeForm(forms.ModelForm):
+#     class Meta:
+#         model = Commande
+#         fields=('id_clt','adresse_livraison','adresse_facturation')
+#     bars = forms.ModelMultipleChoiceField(queryset=Produit.objects.all())
+
+#     def __init__(self, *args, **kwargs):
+#         super(CommandeForm, self).__init__(*args, **kwargs)
+#         if self.instance:
+#             self.fields['bars'].initial = self.instance.bar_set.all()
+
+#     def save(self, *args, **kwargs):
+#         # FIXME: 'commit' argument is not handled
+#         # TODO: Wrap reassignments into transaction
+#         # NOTE: Previously assigned Foos are silently reset
+#         instance = super(CommandeForm, self).save(commit=False)
+#         self.fields['bars'].initial.update(foo=None)
+#         self.cleaned_data['bars'].update(foo=instance)
+#         return instance
+    
 
 
 

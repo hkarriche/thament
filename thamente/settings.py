@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'guardian',
-    #'address',
+    'cart',
+    'orders',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'thamente.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dzwork',
+        'NAME': 'work',
         'USER': 'root',
         'PASSWORD': 'Iogrow2016',
         'HOST': '127.0.0.1',
@@ -148,3 +149,4 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
     'guardian.backends.ObjectPermissionBackend',
 )
+CART_SESSION_ID = 'cart'

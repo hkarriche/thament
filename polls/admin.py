@@ -5,9 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 # Register your models here.
 from .models import  Client, Vendeur, Produit
 # from .models import Choice,Client
-from .models import Panier, Commande, Facture, Categorie, MessageContact,methode_paiement
+from .models import Panier, Facture, Categorie, MessageContact
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
+
+class ProduitInline(admin.TabularInline):
+    model = Produit
+    fields = ('ref_prod','des_prod','prix_prod','cat_prod')
 
 
 class CategorieAdmin(admin.ModelAdmin):
@@ -68,27 +72,32 @@ class PanierAdmin(admin.ModelAdmin):
 class FactureAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,{'fields': ['id_clt']}),
-        (None, {'fields': ['id_cmde']}),
+        #(None, {'fields': ['id_cmde']}),
         (None, {'fields': ['montant_fact']}),
        
         
 
     ]
-    list_display = ('id_clt','id_cmde','montant_fact')
+    list_display = ('id_clt','montant_fact')
 
 
-class CommandeAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None,{'fields': ['id_clt']}),
-        (None, {'fields': ['ref_prod']}),
-        (None, {'fields': ['date_cmde']}),
-        (None, {'fields': ['meth_paiemet']}),
-        (None, {'fields': ['adresse_livraison']}),
-        (None, {'fields': ['adresse_facturation']}),
-        
 
-    ]
-    list_display = ('id_clt','reference_produit','date_cmde','meth_paiemet','adresse_livraison','adresse_facturation')
+# class CommandeAdmin(admin.ModelAdmin):
+#     fieldsets = [
+#         (None,{'fields': ['id_clt']}),
+#         #(None, {'fields': ['ref_prod']}),
+#         (None, {'fields': ['date_cmde']}),
+#         #(None, {'fields': ['meth_paiemet']}),
+#         (None, {'fields': ['adresse_livraison']}),
+#         (None, {'fields': ['adresse_facturation']}),
+#         (None, {'fields': ['ref_prod']}),
+#         # (None, {'fields': ['sub_total']}), 
+#         # (None, {'fields': ['tax_total']}),
+#         # (None, {'fields': ['final_total']}),
+
+#     ]
+#     list_display = ('id_clt','reference_produit','date_cmde','adresse_livraison','adresse_facturation')
+#     #inlines = (ProduitInline,)
 
 # HKA 01.09.2016 Display categorie in produit list display
 
@@ -109,11 +118,15 @@ admin.site.register(Vendeur)
 admin.site.register(Produit,ProduitAdmin)
 admin.site.register(Categorie,CategorieAdmin)
 admin.site.register(Panier,PanierAdmin)
-admin.site.register(Commande,CommandeAdmin)
+#admin.site.register(Commande,CommandeAdmin)
 admin.site.register(Facture,FactureAdmin)
 admin.site.register(MessageContact,MessageAdmin)
-admin.site.register(methode_paiement)
 
+
+# admin.site.register(CartItem)
+# admin.site.register(Item) 
+# admin.site.register(Screenshots)
+# admin.site.register(ContactRequest)
 
 # class ChoiceInline(admin.TabularInline):
 #     model = Choice
