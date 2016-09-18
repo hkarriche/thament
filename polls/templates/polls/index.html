@@ -54,19 +54,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<input type="text" name="Product" value="Rechercher un produit..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
 				<input type="submit" value=" ">
 			</form>
-		</div>
-		<div class="product_list_header">  
-		
 
+		</div>
 		
-			<form action="#" method="post" class="last">
+	 <div class="product_list_header">  
+		
+          
+	
+		
+			<form action="" method="post" class="last">
                 <fieldset>
 
-                
-                    <input type="hidden" name="cmd" value="_cart" />
+               
+                    <input type="hidden" name="cmd" value="" />
                     <input type="hidden" name="display" value="1" />
-                    <input href="/cart" type="submit" name="submit" value="votre panier" class="button" />
-                    <a href="Votre panier"></a>
+                    <input type="button"  name="submit" value="votre panier" class="button" onclick="window.location='/cart';" /> 
+
                 </fieldset>
             </form>
 		</div>
