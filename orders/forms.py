@@ -4,4 +4,4 @@ from .models import Commande
 class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Commande
-        fields = ['paid', 'adresse_livraison']
+        fields = ['adresse_livraison','adresse_facturation','meth_paiemet']

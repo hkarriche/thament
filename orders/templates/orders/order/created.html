@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+  Thank you
+{% endblock %}
+
+{% block content %}
+  <h1>Merci</h1>
+  <p>Votre commande a été complétée avec succès. Votre numéro de commande est <strong>{{ order.id }}</strong>.</p>
+  <p class="text-right">
+    <a href="/polls" class="button light">Continuer vos achat</a>
+    
+  </p>
+{% endblock %}

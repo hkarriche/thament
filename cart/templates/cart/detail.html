@@ -1,0 +1,57 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}
+  Your shopping cart
+{% endblock %}
+
+{% block content %}
+  <h1>Votre Panier</h1>
+  <table class="cart">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Produit</th>
+        <th>Quantité</th>
+        <th>Prix Unitaire</th>                
+        <th>Prix</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+          <tr>
+            <td>
+              <a href="{{ product.get_absolute_url }}">
+                <img src="/polls{{ product.image_prod.url }}">                    
+              </a>
+            </td>
+            <td>{{ product}}</td>
+            <td>
+  <form action="{% url "cart:cart_add" product.id %}" method="post">
+    {{ item.update_quantity_form.quantity }}
+    {{ item.update_quantity_form.update }}
+    <input type="submit" value="Mis à jour">
+    {% csrf_token %}
+  </form>
+</td>
+            
+            <td class="num">DA{{ item.price }}</td>
+            <td class="num">DA{{ item.total_price }}</td>
+            <td><a href="{% url "cart:cart_remove" product.id %}">Supprimer</a></td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+      <tr class="total">
+        <td>Total</td>
+        <td colspan="3"></td>
+        <td class="num">DA{{ cart.get_total_price }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="text-right">
+    <a href="/polls" class="button light">Continuer vos achat</a>
+    <a href="{% url 'orders:order_create' %}" class="button">Commander</a>
+  </p>
+{% endblock %}

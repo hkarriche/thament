@@ -16,20 +16,23 @@ from django.contrib import auth
 from forms import MyCustomUserForm,ClientUserForm
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
-
+from cart.forms import CartAddProductForm
 import base64
 
 class IndexView(generic.ListView):
     context_object_name = 'produit_list'
     template_name = 'polls/index.html'
+
     queryset = Produit.objects.all()
 
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
-
+    
 
 
 
@@ -51,6 +54,8 @@ class OliveView(generic.ListView):
         # olives = Produit.objects.all().filter(cat_prod=cat_olives)
         # encoded_string = base64.b64encode(olives.image_prod)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 class OleastreView(generic.ListView):
@@ -65,6 +70,8 @@ class OleastreView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(OleastreView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 class LentisqueView(generic.ListView):
@@ -80,11 +87,14 @@ class LentisqueView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(LentisqueView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 class MielView(generic.ListView):
     context_object_name = 'miel_list'
     template_name = 'polls/miel.html'
+    #cat_miel = Categorie.objects.get(nom_categorie="Miel")
     try :
         cat_miel = Categorie.objects.get(nom_categorie="Miel")
         queryset = Produit.objects.all().filter(cat_prod=cat_miel)
@@ -95,6 +105,8 @@ class MielView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(MielView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 
@@ -111,6 +123,8 @@ class FiguesView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(FiguesView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 class DattesView(generic.ListView):
@@ -126,6 +140,8 @@ class DattesView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(DattesView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 class RaisinsView(generic.ListView):
@@ -141,6 +157,8 @@ class RaisinsView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(RaisinsView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 class PistachesView(generic.ListView):
@@ -156,6 +174,8 @@ class PistachesView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(PistachesView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 class ContactView(generic.ListView):
@@ -216,6 +236,8 @@ class LoginVendeurView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(LoginVendeurView, self).get_context_data(**kwargs)
         context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
         return context
 
 
@@ -254,5 +276,6 @@ def registerClient(request):
     return render(request, "polls/register_vendeur.html", {
         'form': form,
     })
+
 
 

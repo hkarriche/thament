@@ -277,20 +277,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<h4>DA {{ olive.prix_prod }}<span></span></h4>
 										</div>
 										<div class="snipcart-details top_brand_home_details">
-											<form action="#" method="post">
-												<fieldset>
-													<input type="hidden" name="cmd" value="_cart" />
-													<input type="hidden" name="add" value="1" />
-													<input type="hidden" name="business" value=" " />
-													<input type="hidden" name="item_name" value="{{ olive.ref_prod }}" />
-													<input type="hidden" name="amount" value="{{ olive.prix_prod }}" />
-													<input type="hidden" name="discount_amount" value="{{ olive.remise_prod }}" />
-													<input type="hidden" name="currency_code" value="DZA" />
-													<input type="hidden" name="return" value=" " />
-													<input type="hidden" name="cancel_return" value=" " />
-													<input type="submit" name="submit" value="Ajouter au panier" class="button" />
-												</fieldset>
-											</form>
+												<form action="{% url 'cart:cart_add' olive.id %}" method="post">
+                                                {{ cart_product_form }}
+                                                 {% csrf_token %}
+                                        <input type="submit" value="Ajouter au panier">
+                                        </form>
 										</div>
 									</div>
 								</figure>
