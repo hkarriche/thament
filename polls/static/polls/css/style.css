@@ -113,7 +113,7 @@ input[type="submit"],#PPMiniCart .minicart-submit,.w3ls_vegetables ul li a,input
     width: 15%;
     border: 1px solid;
     position: relative;
-    background: url(../images/img-sp.png) no-repeat 14px 5px #FA1818;
+    background: url(../images/img-sp.png) no-repeat 14px 5px #84C639;
 }
 .w3l_search input[type="submit"]:hover{
     background: url(../images/img-sp.png) no-repeat 14px 5px #84C639;
@@ -132,7 +132,7 @@ input[type="submit"],#PPMiniCart .minicart-submit,.w3ls_vegetables ul li a,input
 	font-size: .74em;
     color: #fff;
     padding: .5em 1.5em;
-    background: #FA1818;
+    background: #84C639;
     display: block;
 	text-decoration:none;
 }
@@ -2482,7 +2482,7 @@ ul.wmuSliderPagination {
 		width: 30%;
 	}
 	.w3l_search input[type="submit"] {
-		background: url(../images/img-sp.png) no-repeat 6px 5px #FA1818;
+		background: url(../images/img-sp.png) no-repeat 6px 5px #84C639;
 	}
 	.w3l_search input[type="submit"]:hover {
 		background: url(../images/img-sp.png) no-repeat 6px 5px #84C639;
@@ -2967,7 +2967,7 @@ ul.wmuSliderPagination {
 		margin: .1em 0 0em 1em;
 	}
 	.w3l_search input[type="submit"] {
-		background: url(../images/img-sp.png) no-repeat 0px 5px #FA1818;
+		background: url(../images/img-sp.png) no-repeat 0px 5px #84C639;
 		width: 18%;
 	}
 	.w3l_search input[type="submit"]:hover {
@@ -3209,7 +3209,7 @@ ul.wmuSliderPagination {
 		padding-left: 6.5em;
 	}
 	.w3l_search input[type="submit"] {
-		background: url(../images/img-sp.png) no-repeat 10px 5px #FA1818;
+		background: url(../images/img-sp.png) no-repeat 10px 5px #84C639;
 	}
 	.w3l_search input[type="submit"]:hover {
 		background: url(../images/img-sp.png) no-repeat 10px 5px #84C639;
@@ -3862,7 +3862,7 @@ ul.wmuSliderPagination {
 		width: 100%;
 	}
 	.w3l_search input[type="submit"] {
-		background: url(../images/img-sp.png) no-repeat 17px 3px #FA1818;
+		background: url(../images/img-sp.png) no-repeat 17px 3px #84C639;
 		padding: 8px 0 8.9px;
 	}
 	.more {
@@ -3999,7 +3999,7 @@ ul.wmuSliderPagination {
 		width: 42%;
 	}
 	.w3l_search input[type="submit"] {
-		background: url(../images/img-sp.png) no-repeat 11px 3px #FA1818;
+		background: url(../images/img-sp.png) no-repeat 11px 3px #84C639;
 	}
 	.w3l_search input[type="submit"]:hover {
 		background: url(../images/img-sp.png) no-repeat 11px 3px #84C639;
