@@ -52,10 +52,17 @@ class ProduitAdmin(admin.ModelAdmin):
 
 
     ]
+    print 'i am in product '
     list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse','image_prod')
     # def categorie_produitt(self):
     #     return self.cat_prod.nom_categorie
-    
+    #qs = super(PageAdmin, self).queryset(request)
+    #print qs
+    def queryset(self, request):
+        if request.user.is_superuser:
+            return Entry.objects.all()
+        else :
+            return {}
 
 class PanierAdmin(admin.ModelAdmin):
     fieldsets = [

@@ -113,9 +113,11 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
 class Vendeur(Person):
     typePerson = models.CharField(max_length=200,blank=True)
+    telephone = models.CharField(max_length=200,blank=True)
 
 class Client(Person):
     typePerson = models.CharField(max_length=200,blank=True)
+    telephone = models.CharField(max_length=200,blank=True)
 
 class Categorie(models.Model):
     nom_categorie = models.CharField('Nom', max_length=70, default='', blank=True)

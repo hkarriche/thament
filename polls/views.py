@@ -17,7 +17,11 @@ from forms import MyCustomUserForm,ClientUserForm
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 from cart.forms import CartAddProductForm
+import operator
+from django.db.models import Q
 import base64
+
+
 
 class IndexView(generic.ListView):
     context_object_name = 'produit_list'
@@ -215,6 +219,8 @@ def registerVendeur(request):
             # new_user.last_name = username = request.POST.get('last_name','')
             # new_user.email = username = request.POST.get('Email','')
             new_user.is_staff = True
+            new_user.is_active = False
+            new_user.save()
             group = Group.objects.get(name='vendeur')
             group.user_set.add(new_user)
             #new_user.groups = group
@@ -277,5 +283,25 @@ def registerClient(request):
         'form': form,
     })
 
+class BlogSearchListView(IndexView):
+    """
+    Display a Blog List page filtered by the search query.
+    """
+    paginate_by = 10
+
+    def get_queryset(self):
+        result = super(Produit, self).get_queryset()
+
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                       (Q(title__icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                       (Q(content__icontains=q) for q in query_list))
+            )
+
+        return result
 
 
