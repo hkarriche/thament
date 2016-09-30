@@ -112,11 +112,11 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
 
 class Vendeur(Person):
-    typePerson = models.CharField(max_length=200,blank=True)
+    typePerson = models.CharField(max_length=200,blank=True,default='vendeur')
     telephone = models.CharField(max_length=200,blank=True)
 
 class Client(Person):
-    typePerson = models.CharField(max_length=200,blank=True)
+    typePerson = models.CharField(max_length=200,blank=True,default='client')
     telephone = models.CharField(max_length=200,blank=True)
 
 class Categorie(models.Model):
@@ -129,7 +129,8 @@ class Categorie(models.Model):
 class Produit (models.Model):
     ref_prod = models.CharField('Reference', max_length=70, default='', blank=True)
     cat_prod = models.ForeignKey(Categorie, on_delete=models.CASCADE) 
-    des_prod = models.CharField('Description', max_length=70, default='', blank=True) 
+    des_prod = models.TextField('Description',max_length=200,null=True,blank=True)
+    owner = models.CharField('Proprietaire', max_length=70,  blank=True)
     #commande = models.ForeignKey(Commande, on_delete=models.CASCADE, blank=True,null=True) 
     prix_prod = models.FloatField('Prix',null=True)
     remise_prod = models.FloatField('Remise',null=True)
@@ -139,6 +140,7 @@ class Produit (models.Model):
         return self.cat_prod.nom_categorie
     def __unicode__(self): #HKA 03.09.2016 this function display the name of categorie in product insertion page
         return u'%s ' % (self.ref_prod)
+    
 
 
 

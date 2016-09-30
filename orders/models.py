@@ -20,6 +20,7 @@ class Commande(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)    
     paid = models.BooleanField(default=False)
+    owner = models.CharField('Proprietaire', max_length=70, default='', blank=True)
 
     class Meta:
         ordering = ('-created',)
@@ -29,7 +30,7 @@ class Commande(models.Model):
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
-
+    
 
 class OrderItem(models.Model):
     commande = models.ForeignKey(Commande, related_name='items')
@@ -37,12 +38,14 @@ class OrderItem(models.Model):
                                 related_name='Commande_items')
     prix = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
     quantite = models.PositiveIntegerField(default=1)
+    
 
     def __str__(self):
         return '{}'.format(self.id)
 
     def get_cost(self):
         return self.prix * self.quantite
+    
 
 
 # class Commande(models.Model):

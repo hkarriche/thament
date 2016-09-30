@@ -36,8 +36,29 @@ class IndexView(generic.ListView):
         cart_product_form = CartAddProductForm()
         context['cart_product_form'] = cart_product_form
         return context
-    
 
+
+class InactiveView(generic.ListView):
+    context_object_name = 'olives_list'
+    template_name = 'polls/inactive.html'
+    try :
+        cat_olives = Categorie.objects.get(nom_categorie="Huile d'olives")
+        queryset = Produit.objects.all().filter(cat_prod=cat_olives)
+    except :
+        queryset = {}
+
+   
+     
+
+
+    def get_context_data(self, **kwargs):
+        context = super(InactiveView, self).get_context_data(**kwargs)
+        # olives = Produit.objects.all().filter(cat_prod=cat_olives)
+        # encoded_string = base64.b64encode(olives.image_prod)
+        context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
+        return context
 
 
 class OliveView(generic.ListView):
@@ -255,8 +276,8 @@ def AuthenticateVendeur(request):
         if user.is_active:
             auth.login(request,user)
             return HttpResponseRedirect('/admin')
-    else :
-        return HttpResponseRedirect('/polls/olives')   
+        else :
+            return HttpResponseRedirect('/polls/inactive')   
 
  
       #*********************#

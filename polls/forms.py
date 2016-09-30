@@ -21,12 +21,12 @@ class MessageContactForm(forms.ModelForm):
 class MyCustomUserForm(RegistrationForm):
     class Meta:
         model = Vendeur
-        fields = ("first_name","last_name","email","telephone")
+        fields = ("first_name","last_name","telephone","email")
 
 class ClientUserForm(RegistrationForm):
     class Meta:
         model = Client
-        fields = ("first_name","last_name","email","telephone")
+        fields = ("first_name","last_name","telephone","email")
 
 
 

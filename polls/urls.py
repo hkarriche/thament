@@ -48,6 +48,7 @@ urlpatterns = [
     # HKA 07.09.2016
     url(r'^site_media/(.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),
     # url('^commander', CreateView.as_view(template_name='polls/commander.html',form_class=CommandeForm,success_url='/polls')),
+    url(r'^inactive/$', views.InactiveView.as_view(), name='olives_list'),
     
 
     

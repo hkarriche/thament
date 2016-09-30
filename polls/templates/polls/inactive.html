@@ -47,46 +47,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- header -->
 	<div class="agileits_header">
 		<div class="w3l_offers">
-			<a href="">Votre santé avant tout  !</a>
+			<a href="products.html">Offre spécial du jour !</a>
 		</div>
 		<div class="w3l_search">
-			<form id="searchform"  action="" method="get" accept-charset="utf-8">
-				
-				 <!-- <button class="searchbutton" type="submit">
-                    <i class="fa fa-search"></i>
-                             </button> -->
-                  <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Rechercher un Produit">
-                  <input type="submit" value="">
+			<form action="#" method="post">
+				<input type="text" name="Product" value="Rechercher un produit..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+				<input type="submit" value=" ">
 			</form>
-
-
- 
 		</div>
-		
-	 <div class="product_list_header">  
-		
-          
-	
-		
-			<form action="" method="post" class="last">
+		<div class="product_list_header">  
+			<form action="#" method="post" class="last">
                 <fieldset>
-
-               
-                    <input type="hidden" name="cmd" value="" />
+                    <input type="hidden" name="cmd" value="_cart" />
                     <input type="hidden" name="display" value="1" />
-                    <input type="button"  name="submit" value="votre panier" class="button" onclick="window.location='/cart';" /> 
-
+                    <input type="button"  name="submit" value="votre panier" class="button" onclick="window.location='/cart';" />
                 </fieldset>
             </form>
 		</div>
 		<div class="w3l_header_right">
-					
 			<ul>
 				<li class="dropdown profile_details_drop">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
 					<div class="mega-dropdown-menu">
 						<div class="w3ls_vegetables">
-
 							<ul class="dropdown-menu drp-mnu">
 								<li><a href="/polls/client/login">Se connecter</a></li> 
 								<li><a href="/polls/register/client">Créer un compte</a></li>
@@ -97,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</ul>
 		</div>
 		<div class="w3l_header_right1">
-			<h2><a href="/polls/contact">Contactez nous</a></h2>
+			<h2><a href="mail.html">Contactez nous</a></h2>
 		</div>
 		<div class="clearfix"> </div>
 	</div>
@@ -125,8 +108,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="w3ls_logo_products_left1">
 				<ul class="special_items">
 					<!-- <li><a href="events.html">Events</a><i>/</i></li> -->
-					<li><a href="about.html">A propos de nous </a><i>/</i></li>
-					<!-- <li><a href="products.html">Vendre</a><i>/</i></li> -->
+					<li><a href="about.html">A propos de nous</a><i>/</i></li>
 					<li class="dropdown mega-dropdown active">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Vendre<span class="caret"></span></a>				
 							<div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
@@ -187,15 +169,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				 </div><!-- /.navbar-collapse -->
 			</nav>
 		</div>
-		<div class="w3l_banner_nav_right">
-			<section class="slider">
+		<div class="w3l_banner_nav_center">
+		<h3>Votre compte n'est pas encore activé</h3>
+			<!-- <section class="slider">
 				<div class="flexslider">
 					<ul class="slides">
 						<li>
 							<div class="w3l_banner_nav_right_banner">
 								<h3>Déguster <span>Nos</span> produits.</h3>
 								<div class="more">
-									<a href="/polls/olives" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
 								</div>
 							</div>
 						</li>
@@ -211,13 +194,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="w3l_banner_nav_right_banner2">
 								<h3>Arrive à <i>50%</i> de remise.</h3>
 								<div class="more">
-									<a href="/polls/olives" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
+									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
 								</div>
 							</div>
 						</li>
 					</ul>
 				</div>
-			</section>
+			</section> -->
 			<!-- flexSlider -->
 				<link rel="stylesheet" href="{% static 'polls/css/flexslider.css' %}" type="text/css" media="screen" property="" />
 				<script defer src="{% static 'polls/js/jquery.flexslider.js' %}"></script> 
@@ -270,14 +253,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div> -->
 <!-- top-brands -->
 	<div class="top-brands">
-		<div class="container">
-			<h3>Offres fraiches</h3>
-		<div class="agile_top_brands_grids">
+		<!-- <div class="container">
+			<h3>Huile d'olives</h3>
+			<div class="agile_top_brands_grids">
 				
    
-   {% if produit_list %}
+   {% if olives_list %}
 
-    {% for olive in produit_list %}
+    {% for olive in olives_list %}
         
     
 				<div class="col-md-3 top_brand_left">
@@ -288,17 +271,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<figure>
 									<div class="snipcart-item block" >
 										<div class="snipcart-thumb">
-				<a href="/polls{{ olive.image_prod.url }}"><img title="{{ olive.des_prod }} " alt=" " src="/polls{{ olive.image_prod.url }}" /></a>		
+											<a href="/polls{{ olive.image_prod.url }}"><img title="{{ olive.ref_prod }} " alt=" " src="/polls{{ olive.image_prod.url }}" /></a>		
 											<p>{{ olive.ref_prod }} </p>
 											<h4>DA {{ olive.prix_prod }}<span></span></h4>
 										</div>
 										<div class="snipcart-details top_brand_home_details">
-			                           
-						               <form action="{% url 'cart:cart_add' olive.id %}" method="post">
+												<form action="{% url 'cart:cart_add' olive.id %}" method="post">
                                                 {{ cart_product_form }}
                                                  {% csrf_token %}
                                         <input type="submit" value="Ajouter au panier">
-                                        </form>	
+                                        </form>
 										</div>
 									</div>
 								</figure>
@@ -315,7 +297,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<div class="clearfix"> </div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 <!-- //top-brands -->
 <!-- fresh-vegetables -->

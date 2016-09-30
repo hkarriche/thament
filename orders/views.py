@@ -18,8 +18,15 @@ def order_create(request):
             try :
                 user = request.user.email
                 client = Client.objects.get(email=user)
-                order.client = client
+                order.client = client               
                 order.save()
+                user = request.user.email
+                client = Client.objects.get(email=user)
+                order.owner = str(client)
+                order.save()
+
+                
+
             except:
                 print 'there is no client'
             for item in cart:

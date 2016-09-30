@@ -48,21 +48,32 @@ class ProduitAdmin(admin.ModelAdmin):
         (None, {'fields': ['cat_prod']}),
         (None, {'fields': ['image_prod']}),
         (None, {'fields': ['bulletin_analyse']}),
+        (None, {'fields': ['owner']}),
         #(None, {'fields': ['level']}),
 
 
     ]
-    print 'i am in product '
-    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse','image_prod')
+    
+    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse','image_prod','owner')
     # def categorie_produitt(self):
     #     return self.cat_prod.nom_categorie
     #qs = super(PageAdmin, self).queryset(request)
     #print qs
-    def queryset(self, request):
+
+    # def save_model(self, request, obj, form, change):
+    #     if not change:
+    #         obj.owner = request.user
+    #         obj.save()
+    def get_changeform_initial_data(self, request):
+        get_data = super(ProduitAdmin, self).get_changeform_initial_data(request)
+        get_data['owner'] = request.user
+        return get_data
+    def get_queryset(self, request):
+        
         if request.user.is_superuser:
-            return Entry.objects.all()
+            return Produit.objects.all()
         else :
-            return {}
+            return Produit.objects.all().filter(owner = request.user)
 
 class PanierAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -87,6 +98,16 @@ class FactureAdmin(admin.ModelAdmin):
     ]
     list_display = ('id_clt','montant_fact')
 
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.owner = request.user
+            obj.save()
+    def get_queryset(self, request):
+        
+        if request.user.is_superuser:
+            return Facture.objects.all()
+        else :
+            return Facture.objects.all()
 
 
 # class CommandeAdmin(admin.ModelAdmin):
