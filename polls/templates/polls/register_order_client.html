@@ -164,7 +164,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						
 					</ul>
 				{% else %}
-                <p>Aucune catégories n'est disponible</p>
+                
                 {% endif %}
 				 </div><!-- /.navbar-collapse -->
 			</nav>
@@ -173,7 +173,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 		<!-- login -->
 		<div class="w3_login">
-			<h3>Connecter à ton espace Client</h3>
+			<h3>Creation Compte Client</h3>
 			<div class="w3_login_module">
 				<div class="module form-module">
 				  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
@@ -188,17 +188,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</form>
 				  </div> -->
 				  <div class="form">
-					
-					<form action="/polls/order/authenticate" method="post"> {% csrf_token%}
+					<h2>Créer un compte client</h2>
+					{% block content %}
+                <form method="Post" action="/polls/register/order/client" class="post-form">{% csrf_token %}
+                  {{ form.as_ul }}
+
+                 <li><span></span></li>
+                 <button type="submit">Envoyer</button>
+                 </form>
+                {% endblock %}
+					<!-- <form action="#" method="post">
 					  <input type="text" name="Username" placeholder="Username" required=" ">
 					  <input type="password" name="Password" placeholder="Password" required=" ">
-					  <!-- <input type="email" name="Email" placeholder="Email Address" required=" ">
-					  <input type="text" name="Phone" placeholder="Phone Number" required=" "> -->
-					  <input type="submit" value="Se connecter">
-					</form>
+					  <input type="email" name="Email" placeholder="Email Address" required=" ">
+					  <input type="text" name="Phone" placeholder="Phone Number" required=" ">
+					  <input type="submit" value="Register">
+					</form> -->
 				  </div>
-				    
-				  <div class="cta"><a href="/polls/register/order/client">Créer votre compte client</a></div>
+				  <!-- <div class="cta"><a href="#">Forgot your password?</a></div> -->
 				</div>
 			</div>
 			<script>
