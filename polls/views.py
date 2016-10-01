@@ -312,7 +312,7 @@ def registerClient(request):
             return HttpResponseRedirect("/polls")
     else:
         form = ClientUserForm()
-    return render(request, "polls/register_vendeur.html", {
+    return render(request, "polls/register_client.html", {
         'form': form,
     })
 
@@ -342,3 +342,26 @@ def AuthenticateOrderClient(request):
             return HttpResponseRedirect('/orders/create/')
         else :
             return HttpResponseRedirect('/polls/inactive') 
+
+def registerOrderClient(request):
+    
+    if request.method == 'POST':
+        form = ClientUserForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            # new_user.first_name = username = request.POST.get('first_name','')
+            # new_user.last_name = username = request.POST.get('last_name','')
+            # new_user.email = username = request.POST.get('Email','')
+            new_user.is_staff = True
+            new_user.save()
+            
+            group = Group.objects.get(name='client')
+            group.user_set.add(new_user)
+           
+
+            return HttpResponseRedirect("/polls/order/signin")
+    else:
+        form = ClientUserForm()
+    return render(request, "polls/register_order_client.html", {
+        'form': form,
+    })

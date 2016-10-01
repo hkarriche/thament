@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^order/signin$',views.OrderSigninView.as_view(), name='order_signin'),
     url(r'^order/authenticate$', views.AuthenticateOrderClient, name='OrderAuthenticate'),
     url('^register/order/client', CreateView.as_view(template_name='polls/register_order_client.html',form_class=ClientUserForm,success_url='/orders/create/')),
+    url(r'^client/order/create$', views.registerOrderClient, name='createOrderClient'),
 
     
 
