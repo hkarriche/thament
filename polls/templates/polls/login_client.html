@@ -253,46 +253,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- top-brands -->
 	<div class="top-brands">
 		<div class="container">
-			<h3>Offres fraiches</h3>
+			
 		<div class="agile_top_brands_grids">
 				
    
-   {% if produit_list %}
-
-    {% for olive in produit_list %}
-        
-    
-				<div class="col-md-3 top_brand_left">
-					<div class="hover14 column">
-						<div class="agile_top_brand_left_grid">
-							<div class="tag"><img src="{% static 'polls/images/tag.png' %}" alt=" " class="img-responsive" /></div>
-							<div class="agile_top_brand_left_grid1">
-								<figure>
-									<div class="snipcart-item block" >
-										<div class="snipcart-thumb">
-											<a href="/polls{{ olive.image_prod.url }}"><img title="{{ olive.ref_prod }} " alt=" " src="/polls{{ olive.image_prod.url }}" /></a>		
-											<p>{{ olive.ref_prod }}</p>
-											<h4>DA {{ olive.prix_prod }}<span></span></h4>
-										</div>
-										<div class="snipcart-details top_brand_home_details">
-												<form action="{% url 'cart:cart_add' olive.id %}" method="post">
-                                                {{ cart_product_form }}
-                                                 {% csrf_token %}
-                                        <input type="submit" value="Ajouter au panier">
-                                        </form>
-										</div>
-									</div>
-								</figure>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-			{% endfor %}	
-				
-          {% else %}
-                 <p>Aucun Produit n'est disponible.</p>
-          {% endif %}
+   
 
 				<div class="clearfix"> </div>
 			</div>
