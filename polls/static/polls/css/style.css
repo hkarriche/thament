@@ -4272,3 +4272,7 @@ ul.wmuSliderPagination {
 		font-size: 13px;
 	}
 }
+label.required::after {
+    content: "*";
+    color: red;
+}

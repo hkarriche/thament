@@ -19,14 +19,20 @@ class MessageContactForm(forms.ModelForm):
 
 
 class MyCustomUserForm(RegistrationForm):
+    required_css_class = 'required'
     class Meta:
         model = Vendeur
         fields = ("first_name","last_name","telephone","email")
+        
+
 
 class ClientUserForm(RegistrationForm):
+    required_css_class = 'required'
     class Meta:
         model = Client
         fields = ("first_name","last_name","telephone","email")
+        
+
 
 
 
