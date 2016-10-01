@@ -254,6 +254,19 @@ def registerVendeur(request):
         'form': form,
     })
 
+class LoginClientView(generic.ListView):
+    context_object_name = 'produits_list'
+    template_name = 'polls/login_client.html'
+    queryset = Produit.objects.all()
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginClientView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
+        return context
+
 class LoginVendeurView(generic.ListView):
     context_object_name = 'produits_list'
     template_name = 'polls/login_vendeur.html'
@@ -266,7 +279,6 @@ class LoginVendeurView(generic.ListView):
         cart_product_form = CartAddProductForm()
         context['cart_product_form'] = cart_product_form
         return context
-
 
 def AuthenticateVendeur(request):
     username = request.POST.get('Username','')
@@ -304,25 +316,29 @@ def registerClient(request):
         'form': form,
     })
 
-class BlogSearchListView(IndexView):
-    """
-    Display a Blog List page filtered by the search query.
-    """
-    paginate_by = 10
 
-    def get_queryset(self):
-        result = super(Produit, self).get_queryset()
+#HKA 30.09.2016 create an account after sign-in or sign-up
 
-        query = self.request.GET.get('q')
-        if query:
-            query_list = query.split()
-            result = result.filter(
-                reduce(operator.and_,
-                       (Q(title__icontains=q) for q in query_list)) |
-                reduce(operator.and_,
-                       (Q(content__icontains=q) for q in query_list))
-            )
+class OrderSigninView(generic.ListView):
+    context_object_name = 'produits_list'
+    template_name = 'polls/order_client.html'
+    queryset = Produit.objects.all()
+    
 
-        return result
-
-
+    def get_context_data(self, **kwargs):
+        context = super(OrderSigninView, self).get_context_data(**kwargs)
+        context['categories'] = Categorie.objects.all()
+        cart_product_form = CartAddProductForm()
+        context['cart_product_form'] = cart_product_form
+        return context
+#HKA 30.09.2016 Redirect the client to create order
+def AuthenticateOrderClient(request):
+    username = request.POST.get('Username','')
+    password = request.POST.get('Password','')
+    user = authenticate(username=username,password=password)
+    if user is not None :
+        if user.is_active:
+            auth.login(request,user)
+            return HttpResponseRedirect('/orders/create/')
+        else :
+            return HttpResponseRedirect('/polls/inactive') 

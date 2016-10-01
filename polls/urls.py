@@ -40,7 +40,7 @@ urlpatterns = [
     #HKA 25.08.2016 Customer views for sign-in & sign up
     url('^register/client', CreateView.as_view(template_name='polls/register_client.html',form_class=ClientUserForm,success_url='/polls')),
     url(r'^client/create$', views.registerClient, name='createClient'),
-    url(r'^client/login$',views.LoginVendeurView.as_view(), name='login_vendeur'),
+    url(r'^client/login$',views.LoginClientView.as_view(), name='login_client'),
     url(r'^client/authenticate$', views.AuthenticateVendeur, name='createVendeur'),
     url(r'^accounts/register/$',RegistrationView.as_view(form_class=MyCustomUserForm),name='registration_register',),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
@@ -49,7 +49,8 @@ urlpatterns = [
     url(r'^site_media/(.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),
     # url('^commander', CreateView.as_view(template_name='polls/commander.html',form_class=CommandeForm,success_url='/polls')),
     url(r'^inactive/$', views.InactiveView.as_view(), name='olives_list'),
-    
+    url(r'^order/signin$',views.OrderSigninView.as_view(), name='order_signin'),
+    url(r'^order/authenticate$', views.AuthenticateOrderClient, name='OrderAuthenticate'),
 
     
 
