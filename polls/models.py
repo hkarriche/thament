@@ -41,9 +41,9 @@ class CustomUserManager(BaseUserManager):
 class Person(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email (Utilisateur)'), unique=True)
     #username = models.CharField('Utilisateur', unique=True, max_length=70, default='', blank=True)
-    first_name = models.CharField(_('Prenom'), max_length=30, blank=True)
+    first_name = models.CharField(_('Prenom'), max_length=30, blank=False)
     middle_name = models.CharField(_('middle name'), max_length=30, blank=True)
-    last_name = models.CharField(_('Nom'), max_length=30, blank=True)
+    last_name = models.CharField(_('Nom'), max_length=30, blank=False)
     #groups = models.ForeignKey(Group, on_delete=models.CASCADE,null=True)
     is_staff = models.BooleanField(_('staff status'), default=True,
         help_text=_('Designates whether the user can log into this admin '
