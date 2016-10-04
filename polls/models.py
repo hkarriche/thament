@@ -158,6 +158,7 @@ class Facture (models.Model):
     id_clt = models.ForeignKey(Client, on_delete=models.CASCADE)
     #id_cmde = models.ForeignKey(Commande, on_delete=models.CASCADE)
     montant_fact = models.CharField('Montant Facture',max_length=200)
+    owner = models.CharField('Proprietaire', max_length=70,  blank=True)
 
 
 class MessageContact(models.Model):

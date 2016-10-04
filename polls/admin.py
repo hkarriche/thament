@@ -108,7 +108,8 @@ class FactureAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return Facture.objects.all()
         else :
-            return Facture.objects.all()
+            kheddame = str(request.user.email)
+            return Facture.objects.all().filter(owner=kheddame)
 
 
 # class CommandeAdmin(admin.ModelAdmin):
