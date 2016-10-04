@@ -7,6 +7,7 @@ from .models import  Client, Vendeur, Produit
 # from .models import Choice,Client
 from .models import Panier, Facture, Categorie, MessageContact
 from .forms import CustomUserChangeForm, CustomUserCreationForm
+from orders.models import OrderItem, Commande
 
 
 class ProduitInline(admin.TabularInline):
@@ -134,14 +135,32 @@ def unbound_callable(produit):
 class ProduitInline(admin.TabularInline):
     model = Produit
     fields = ('ref_prod', 'model_callable')
-    #readonly_fields = ('model_callable', 'model_admin_callable', unbound_callable
-# class ProduitAdmin(admin.ModelAdmin):
-#     model = Produit
-#     #inlines = (ProduitInline,)
-#     list_display('ref_prod','model_callable')
+ 
 
 
-admin.site.register(Client)
+ #HKA 04.05.2016 Display clients for vendors, the client must have an order for this vendor   
+
+
+class ClientInline(admin.TabularInline):
+    model = Client
+    extra = 1
+
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ['first_name','last_name','email','telephone']
+    inlines = [ClientInline]
+
+    def get_queryset(self, request):
+        kheddame = str(request.user.email)       
+        if request.user.is_superuser:
+            return Client.objects.all()
+        else :
+            ss = Produit.objects.all().filter(owner=kheddame)
+            dd = OrderItem.objects.filter(produit__in=ss)
+            zz = Commande.objects.filter(id__in=[p.commande_id for p in dd])
+            return Client.objects.filter(email__in=[p.owner for p in zz])
+
+
+admin.site.register(Client,ClientAdmin)
 admin.site.register(Vendeur)
 admin.site.register(Produit,ProduitAdmin)
 admin.site.register(Categorie,CategorieAdmin)
