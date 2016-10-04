@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Commande, OrderItem,methode_paiement
 from polls.models import Client, Produit, Vendeur
-
+from django.db import connection
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     raw_id_fields = ['produit']
@@ -26,32 +26,10 @@ class OrderAdmin(admin.ModelAdmin):
         	return Commande.objects.all()
         if client is not None :
         	return Commande.objects.all().filter(owner=kheddame)
-        else : 
-        	produit = Produit.objects.all().filter(owner=kheddame)
-        	print ('here product *********')
-        	print produit
-        	listorder = {}
-        	listorder = OrderItem.objects.all().filter(produit=produit)
-        	print ('here orderitem *********')
-        	print listorder
-        	return Commande.objects.all().filter(id=61)
-
-        # else :
-        # 	try :
-        # 		client = Client.objects.get(email=kheddame)
-        # 		if client is not None :
-        # 			return Commande.objects.all().filter(owner=kheddame)
-        # 	except :
-        # 		print ('there is no client')
-
-        # 	try :
-        # 		vendeur = Vendeur.objects.get(email=kheddam)
-        # 		if vendeur is not None :
-        # 			
-        # 			orderitems = Produit.objects.all().filter(owner=vendeur)
-        # 			return Commande.objects.all().filter(id=61)
-        # 	except :
-        # 		print ('there is no vendor')
+        else :
+            ss = Produit.objects.all().filter(owner=kheddame)
+            dd = OrderItem.objects.filter(produit__in=ss)
+            return Commande.objects.filter(id__in=[p.commande_id for p in dd])
         	
         
         
