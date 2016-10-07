@@ -366,44 +366,11 @@ def registerOrderClient(request):
         'form': form,
     })
 
-class BlogSearchListView(IndexView):
-    """
-    Display a Blog List page filtered by the search query.
-    """
-    paginate_by = 10
 
-    def get_queryset(self):
-        result = super(BlogSearchListView, self).get_queryset()
 
-        query = self.request.GET.get('q')
-        if query:
-            query_list = query.split()
-            result = result.filter(
-                reduce(operator.and_,
-                       (Q(title__icontains=q) for q in query_list)) |
-                reduce(operator.and_,
-                       (Q(content__icontains=q) for q in query_list))
-            )
-
-        return result
-
-# def search(request):
-#     print (i am here')
-#     new_results = []
-#     error = True
-#     if "q" in request.GET: 
-#         query = request.GET["q"].strip()
-#         results = graph_search.main(query)
-#         for result in results:
-#             result[3] = result[3].decode('unicode_escape').encode('ascii', 'ignore')
-#             new_results.append(result)
-#         new_results = list(reversed(sorted(new_results, key=itemgetter(4))))
-#         return render(request, 'search.html',
-#                       {'results': new_results, 'query': query})
-#     return render(request, "polls/search.html", {'error': error})
 
 def search(request):
-    print (' i am in search')
+   
     try:
         q = request.GET.get('q')
     except:
@@ -411,7 +378,8 @@ def search(request):
     
     if q:
         products = Produit.objects.filter(ref_prod__icontains=q)
-        context = {'query': q, 'products': products}
+        cart_product_form = CartAddProductForm()
+        context = {'query': q, 'products': products,'cart_product_form':cart_product_form}
         template = 'polls/results.html'  
     else:
         template = 'polls/index.html' 

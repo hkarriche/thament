@@ -14,6 +14,8 @@
 <th>Nom Produit</th>
 <th>Image</th>
 <th>Description</th>
+<th>Ajouter au panier</th>
+
 </thead>
 
 <tbody>
@@ -32,6 +34,15 @@
 	
 	</td>
 	<td><a href="">{{ product.description }}</a></td>
+      
+     <td> <form action="{% url "cart:cart_add" product.id %}" method="post">
+    {{ cart_product_form.quantity}}
+                                                 {% csrf_token %}
+    <input type="submit" value="Ajouter au panier">
+    {% csrf_token %}
+  </form></td>
+
+
 	</tr>
 {% endfor %}
 
