@@ -50,10 +50,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<a href="">Votre santé avant tout  !</a>
 		</div>
 		<div class="w3l_search">
-			<form action="#" method="post">
-				<input type="text" name="Product" value="Rechercher un produit..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
-				<input type="submit" value=" ">
+			<form id="searchform"  action="/polls/search" method="get" accept-charset="utf-8">
+				
+				 <!-- <button class="searchbutton" type="submit">
+                    <i class="fa fa-search"></i>
+                             </button> -->
+                  <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Rechercher un Produit">
+                  <input type="submit" value="">
 			</form>
+
+
+ 
 		</div>
 		<div class="product_list_header">  
 			<form action="#" method="post" class="last">
