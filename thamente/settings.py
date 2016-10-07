@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'guardian',
     'cart',
     'orders',
+    'paypal.standard.ipn',
     
 ]
 
@@ -152,3 +153,7 @@ AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
 )
 CART_SESSION_ID = 'cart'
+
+# django-paypal settings
+PAYPAL_RECEIVER_EMAIL = 'mypaypalemail@myshop.com'
+PAYPAL_TEST = True

@@ -1,0 +1,28 @@
+<p>You searched for: <strong>{{ query }}</strong></p>
+
+{% if results %}
+    <div class="container">
+    <div class="row">
+        <div class="timeline-centered">
+        {% for result in results %}
+             <article class="timeline-entry">
+                <div class="timeline-entry-inner">
+                    <div class="timeline-icon bg-info">
+                        <i class="entypo-feather"></i>
+                    </div>
+                    <div class="timeline-label">
+                        <strong>Statement: </strong>{{ result.3 }}<br>
+                        <strong>Doc: </strong>{{ result.0 }} <br>
+                        <strong>Context: </strong>{{ result.1 }} <br>
+                        <strong>Related: </strong>{{ result.2 }} <br>
+                        <strong>Confidence: </strong>{{ result.4}} &#37 <br>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+
+{% else %}
+    <p>No results matched your search criteria.</p>

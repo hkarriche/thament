@@ -53,6 +53,8 @@ urlpatterns = [
     url(r'^order/authenticate$', views.AuthenticateOrderClient, name='OrderAuthenticate'),
     url('^register/order/client', CreateView.as_view(template_name='polls/register_order_client.html',form_class=ClientUserForm,success_url='/orders/create/')),
     url(r'^client/order/create$', views.registerOrderClient, name='createOrderClient'),
+    #url(r'^search/$', views.BlogSearchListView, name='researchProduct'),
+    url(r'^search/$', views.search, name='search'),
 
     
 

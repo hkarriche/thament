@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+<h1>Recherche pour le Produit : {{ query }}</h1>
+
+
+
+<table class='table'>
+<thead>
+
+<th>Nom Produit</th>
+<th>Image</th>
+<th>Description</th>
+</thead>
+
+<tbody>
+
+{% for product in products %}
+	<tr>
+	
+	<td>
+	<a href=''>
+	{{ product }} </a>
+	
+	</td>
+	<td>
+	<a href="/polls{{ product.image_prod.url }}"><img title="{{ product.des_prod }} " alt=" " src="/polls{{ product.image_prod.url }}" /></a>
+	
+	
+	</td>
+	<td><a href="">{{ product.description }}</a></td>
+	</tr>
+{% endfor %}
+
+</tbody>
+
+
+</table>
+
+<p class="text-right">
+    
+  </p>
+
+<p class="text-right">
+    <a href="/polls" class="button light">Effectuer une nouvelle recherche</a>
+    <a href="/polls/order/signin" class="button">Ajoutet au panier</a>
+  </p>
+{% endblock %}
