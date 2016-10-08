@@ -1,0 +1,88 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" type="text/css" href="{% static "css/admin.css" %}" />
+{% endblock %}
+
+{% block title %}
+  Commande {{ order.id }} {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="breadcrumbs">
+  
+  </div>
+{% endblock %}
+
+{% block content %}
+<h1>Order {{ order.id }}</h1>
+<ul class="object-tools">
+  <li>
+    <a href="#" onclick="window.print();">Imprimer la commande</a>
+  </li>
+</ul>
+<table>
+  <tr>
+    <th>Crée le </th>
+    <td>{{ order.created }}</td>
+  </tr>
+  <tr>
+    <th>Client</th>
+    <td>{{ order.client.first_name }} {{ order.client.last_name }}</td>
+  </tr>
+  <tr>
+    <th>E-mail</th>
+    <td><a href="mailto:{{ order.email }}">{{ order.owner }}</a></td>
+  </tr>
+  <tr>
+    <th>Addresse Facturation</th>
+    <td>{{ order.adresse_facturation }}</td>
+  </tr><tr>
+    <th>Addresse Livraison</th>
+    <td>{{ order.adresse_livraison }}</td>
+  </tr>
+  <tr>
+    <th>Méthode de paiement</th>
+    <td>{{ order.meth_paiemet }}</td>
+  </tr>
+  <tr>
+    <th>Total </th>
+    <td>DA {{ order.get_total_cost }}</td>
+  </tr>
+  <tr>
+    <th>Statut</th>
+    <td>{% if order.paid %}Paid{% else %} En attente de réglement{% endif %}</td>
+  </tr>
+</table>
+
+<div class="module">
+  <div class="tabular inline-related last-related">
+    <table>
+      <h2>Produit Acheté</h2>
+      <thead>
+        <tr>
+          <th>Produit</th>
+          <th>Prix</th>
+          <th>Quantité</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.items.all %}
+          <tr class="row{% cycle "1" "2" %}">
+            <td>{{ item.produit.ref_prod }}</td>
+            <td class="num">DA{{ item.prix }}</td>
+            <td class="num">{{ item.quantite }}</td>
+            <td class="num">DA{{ item.get_cost }}</td>
+          </tr>
+        {% endfor %}
+        <tr class="total">
+          <td colspan="3">Total</td>
+          <td class="num">DA{{ order.get_total_cost }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

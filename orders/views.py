@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from .models import OrderItem
+from .models import OrderItem, Commande
 from .forms import OrderCreateForm
 from cart.cart import Cart
 from polls.models import Client
-
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
 
 def order_create(request):
     cart = Cart(request)
@@ -44,3 +46,13 @@ def order_create(request):
     return render(request,
                   'orders/order/create.html',
                   {'cart': cart, 'form': form})
+
+#HKA 08.10.2016 The staff_member_required decorator checks that both is_active and is_staff fields of the user requesting the page are set to True
+
+@staff_member_required
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Commande, id=order_id)
+    return render(request,
+                  'orders/order/detail.html',
+                  {'order': order})   
+    
