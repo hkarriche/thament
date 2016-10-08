@@ -12,7 +12,7 @@ from orders.models import OrderItem, Commande
 
 class ProduitInline(admin.TabularInline):
     model = Produit
-    fields = ('ref_prod','des_prod','prix_prod','cat_prod')
+    fields = ('ref_prod','des_prod','prix_prod','cat_prod','code_prod')
 
 
 class CategorieAdmin(admin.ModelAdmin):
@@ -43,6 +43,7 @@ class ProduitAdmin(admin.ModelAdmin):
         return obj.cat_prod.nom_categorie
     fieldsets = [
         (None,{'fields': ['ref_prod']}),
+        (None, {'fields': ['code_prod']}),
         (None, {'fields': ['des_prod']}),
         (None, {'fields': ['prix_prod']}),
         (None, {'fields': ['remise_prod']}),
@@ -50,12 +51,12 @@ class ProduitAdmin(admin.ModelAdmin):
         (None, {'fields': ['image_prod']}),
         (None, {'fields': ['bulletin_analyse']}),
         (None, {'fields': ['owner']}),
-        #(None, {'fields': ['level']}),
+        
 
 
     ]
     
-    list_display = ('ref_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse','image_prod','owner')
+    list_display = ('ref_prod','code_prod','des_prod','prix_prod','cat_prod','remise_prod','categorie_produit','bulletin_analyse','image_prod','owner')
     # def categorie_produitt(self):
     #     return self.cat_prod.nom_categorie
     #qs = super(PageAdmin, self).queryset(request)

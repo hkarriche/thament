@@ -131,6 +131,7 @@ class Produit (models.Model):
     cat_prod = models.ForeignKey(Categorie, on_delete=models.CASCADE) 
     des_prod = models.TextField('Description',max_length=200,null=True,blank=True)
     owner = models.CharField('Proprietaire', max_length=70,  blank=True)
+    code_prod = models.CharField('Code Produit', max_length=70,  blank=True)
     #commande = models.ForeignKey(Commande, on_delete=models.CASCADE, blank=True,null=True) 
     prix_prod = models.FloatField('Prix',null=True)
     remise_prod = models.FloatField('Remise',null=True)
