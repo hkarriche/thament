@@ -21,10 +21,16 @@ def order_detail(obj):
         reverse('orders:admin_order_detail', args=[obj.id]))
 order_detail.allow_tags = True 
 
+def order_pdf(obj):
+    return '<a href="{}">PDF</a>'.format(
+        reverse('orders:admin_order_pdf', args=[obj.id]))
+order_pdf.allow_tags = True
+order_pdf.short_description = 'Facture PDF'
+
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id','client','paid','meth_paiemet','adresse_livraison', 
-                    'adresse_facturation','created', 'updated','owner',order_detail]
+                    'adresse_facturation','created', 'updated','owner',order_detail,order_pdf]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
 

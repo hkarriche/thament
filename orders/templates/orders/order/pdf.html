@@ -1,0 +1,49 @@
+<html>
+<body>
+  <h1>Marketplace Miel et Huile d'olive </h1>
+  <p>
+    Facture no. {{ order.id }}</br>
+    <span class="secondary">
+      le {{ order.created|date:"d M , Y" }}
+    </span>
+  </p>
+
+  <h3>Facture Pour </h3>
+  <p>
+    {{ order.client.first_name }} {{ order.client.last_name }}<br>
+    {{ order.owner }}<br>
+    {{ order.adresse_facturation }}<br>
+    {{ order.postal_code }}, {{ order.city }}
+  </p>
+
+  <h3>Produits Achetés</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Cout</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.items.all %}
+        <tr class="row{% cycle "1" "2" %}">
+          <td>{{ item.produit.ref_prod  }}</td>
+          <td class="num">DA{{ item.prix }}</td>
+          <td class="num">{{ item.quantite }}</td>
+          <td class="num">DA{{ item.get_cost }}</td>
+        </tr>
+      {% endfor %}
+      <tr class="total">
+        <td colspan="3">Total</td>
+        <td class="num">DA{{ order.get_total_cost }}</td>
+      </tr>
+    </tbody>
+  </table>
+    
+  <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
+    {% if order.paid %}Réglé{% else %}En attente de réglement{% endif %}
+  </span>
+</body>
+</html>

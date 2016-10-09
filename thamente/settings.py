@@ -153,4 +153,5 @@ AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
 )
 CART_SESSION_ID = 'cart'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
