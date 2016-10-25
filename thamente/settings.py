@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'guardian',
+    #'guardian',
     'cart',
     'orders',
     
@@ -81,16 +81,28 @@ WSGI_APPLICATION = 'thamente.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 # HKA 18.08.2016 Local Database
-DATABASES = {
+#add some changes
+DATABASES = { 
+
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'work',
-        'USER': 'root',
-        'PASSWORD': 'Iogrow2016',
-        'HOST': '127.0.0.1',
-        #'PORT': '5432',
+        'NAME': os.environ['OPENSHIFT_APP_NAME'],
+        'USER': os.environ['OPENSHIFT_MYSQL_DB_USERNAME'],
+        'PASSWORD': os.environ['OPENSHIFT_MYSQL_DB_PASSWORD'],
+        'HOST': '127.11.151.2',
+        'PORT': '3306'
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'work',
+#         'USER': 'root',
+#         'PASSWORD': 'Iogrow2016',
+#         'HOST': '127.0.0.1',
+#         #'PORT': '5432',
+#     }
+# }
 
 # HKA 18.08.2016 Server database
 
